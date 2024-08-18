@@ -11,17 +11,17 @@ public class HelloWorld {
     }
 
     public static void printAge() {
-        int age = 25; 
+        int age = 19; 
         System.out.println("I am " + age + " years old.");
     }
 
     public static void printHeight() {
-        float height = 5.9f; 
+        float height = 5.7f; 
         System.out.println("I am " + height + " feet tall.");
     }
 
     public static void printGPA() {
-        double gpa = 3.75; 
+        double gpa = 4.00; 
         System.out.println("My GPA is " + gpa + ".");
     }
 

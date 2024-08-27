@@ -1,4 +1,4 @@
-name: Sync Organization Repos
+name: Sync CPSC 2150 Repos
 
 on:
   schedule:

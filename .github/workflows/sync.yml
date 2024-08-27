@@ -27,5 +27,5 @@ jobs:
           git config --local user.email "mje2@clemson.edu"
           git config --local user.name "Michael-Joseph-Ellis"
           git add .
-          git commit -m "Synced files from organization repos"
+          git commit -m "Successfully synced files from certain CPSC2150 group repos"
           git push https://$GITHUB_ACTOR:${{ secrets.GH_PAT }}@github.com/Michael-Joseph-Ellis/CPSC-Coursework.git main

@@ -15,7 +15,7 @@ jobs:
       - name: Sync repository 1
         run: |
           mkdir -p "CPSC2150/first assignment"
-          git clone https://github.com/Clemson-CPSC2150-SummerFall24/hw0-getting-into-teams-define-isnan-x-false temp/repo1
+          git clone https://$GITHUB_ACTOR:${{ secrets.GH_PAT }}@github.com/Clemson-CPSC2150-SummerFall24/hw0-getting-into-teams-define-isnan-x-false temp/repo1
           cp -r temp/repo1/* "CPSC2150/first assignment/"
           rm -rf temp/repo1
 

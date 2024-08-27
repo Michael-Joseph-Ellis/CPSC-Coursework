@@ -1,0 +1,31 @@
+name: Sync Organization Repos
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # 2 hour interval for actions
+  workflow_dispatch:  # run action manually
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v2
+
+      - name: Sync repository 1
+        run: |
+          mkdir -p "CPSC2150/first assignment"
+          git clone https://github.com/Clemson-CPSC2150-SummerFall24/hw0-getting-into-teams-define-isnan-x-false temp/repo1
+          cp -r temp/repo1/* "CPSC2150/first assignment/"
+          rm -rf temp/repo1
+
+      # essentially the same as above for future assignments, but for a different repo, folder, and link
+
+      # commit and push changes
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "mje2@clemson.edu"
+          git config --local user.name "Michael-Joseph-Ellis"
+          git add .
+          git commit -m "Synced files from organization repos"
+          git push origin main

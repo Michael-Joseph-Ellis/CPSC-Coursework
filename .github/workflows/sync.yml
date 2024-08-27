@@ -28,4 +28,4 @@ jobs:
           git config --local user.name "Michael-Joseph-Ellis"
           git add .
           git commit -m "Synced files from organization repos"
-          git push origin main
+          git push https://$GITHUB_ACTOR:${{ secrets.GH_PAT }}@github.com/Michael-Joseph-Ellis/CPSC-Coursework.git main

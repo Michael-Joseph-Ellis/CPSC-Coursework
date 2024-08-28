@@ -2,7 +2,7 @@ name: Sync CPSC 2150 Repos
 
 on:
   schedule:
-    - cron: '0 */2 * * *'  # 2 hour interval for actions
+    - cron: '0 0 * * *'  # daily at midnight
   workflow_dispatch:  # run action manually
 
 jobs:

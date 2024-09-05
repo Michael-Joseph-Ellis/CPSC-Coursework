@@ -4,7 +4,7 @@ Developers:
 
 Team: #define isnan(x) false
 
-[Team member 1 name] - [Team member 1 GitHub username]
+Michael Ellis - Michael-Joseph-Ellis
 
 [Team member 2 name] - [Team member 2 GitHub username]
 

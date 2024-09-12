@@ -6,7 +6,7 @@ Team: #define isnan(x) false
 
 Michael Ellis - Michael-Joseph-Ellis
 
-[Team member 2 name] - [Team member 2 GitHub username]
+Ryan Chen - rchen55
 
 [Team member 3 name] - [Team member 3 GitHub username]
 

@@ -8,7 +8,7 @@ Michael Ellis - Michael-Joseph-Ellis
 
 Ryan Chen - rchen55
 
-[Team member 3 name] - [Team member 3 GitHub username]
+Cooper Taylor - Cooper-Taylor
 
 Adam Niemczura - AdamNiem
 

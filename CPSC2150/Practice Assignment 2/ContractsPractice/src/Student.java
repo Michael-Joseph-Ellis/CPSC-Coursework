@@ -143,8 +143,8 @@ public class Student
      * @param obj The object to compare to the current student object.
      * 
      * @pre obj != null AND obj instanceof Student for meaningful comparison
-     * 
-     * @post [returns true if the name, age, and email of the two students are the same, else returns false]
+     *
+     * @post equals = true IFF the name, age, and email of the two students are the same, else returns false
      * 
      * @return true if the name, age, and email of the two students are the same, else returns false
      */

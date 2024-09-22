@@ -20,11 +20,11 @@ public class GameBoard
     /**
      * A constructor for GameBoard. 
      * 
-     * @return 
+     * @return None
      * 
      * @pre None
      * 
-     * @post A new GameBoard is initialized with empty spots
+     * @post A new GameBoard is initialized with empty spots.
      */
 
     public GameBoard()
@@ -37,13 +37,14 @@ public class GameBoard
      * 
      * @param c the index of the column on the game board
      * 
-     * @return true IF the column is free AND false IF column is full
+     * @return true IF [the column is free] AND false IF [column is full]
      * 
      * @pre 0 <= c < [number of columns]
      * 
      * @post checkIfFree = true OR checkIfFree = false AND board = #board
      * 
      */
+    
     public boolean checkIfFree(int c)
     {
         //returns true if the column can accept another token; false otherwise.
@@ -70,27 +71,33 @@ public class GameBoard
      * 
      * @param c the index of the column where the last token was placed 
      * 
-     * @return true IF last token in c = Win ELSE false 
+     * @return true IF [last token in c results in a win] ELSE false 
      * 
-     * @pre 0 <= c < number of columns AND the last move was made in column c
+     * @pre 0 <= c < [number of columns] AND [the last move was made in column c]
      * 
-     * @post checkForWin = true OR checkForWin = false
+     * @post checkForWin = true OR checkForWin = false AND board = #board
      * 
      */
+
     public boolean checkForWin(int c)
     {
         /*this function will check to see if the last token placed in column c resulted in the player winning the game.
         If so it will return true, otherwise false. Note: this is not checking the entire board for a win, it is just
         checking if the last token placed results in a win. You may call other methods to complete this method */
     }
+
     /**
      * Checks to see if the game has resulted in a tie
      * 
      * @return true IF [all cells in board are filled] ELSE false
+	  *
+     * @post checkTie = true OR checkTie = false AND board = #board	
+	  *
+     * @pre None
      * 
      * @post checkTie = true OR checkTie = false board = #board
-     * 
      */
+
     public boolean checkTie()
     {
         /*this function will check to see if the game has resulted in a tie. A game is tied if there are no free board
@@ -99,17 +106,58 @@ public class GameBoard
         false otherwise.*/
     }
 
+    /**
+     * Checks to see if the last token placed resulted in a horizontal win
+     * 
+     * @param pos the position where the last token was placed  
+     * @param p player who placed the last token
+     * 
+     * @return true IF [last token results in a horizontal win] ELSE false
+     * 
+     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
+	 * 
+     * @post checkHorizWin = true OR checkHorizWin = false AND board = #board
+     * 
+     */
+
     public boolean checkHorizWin(BoardPosition pos, char p)
     {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in
         a row horizontally. Returns true if it does, otherwise false*/
     }
 
+    /**
+     * Checks to see if the last token placed resulted in a vertical win
+     * 
+     * @param pos the position where the last token was placed  
+     * @param p the player who placed the last token
+     * 
+     * @return true IF [last token results in a vertical win] ELSE false
+     * 
+     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
+     * 
+     * @post checkVerWin = true OR checkVertWin = false AND board = #board
+     * 
+     */
+
     public boolean checkVertWin(BoardPosition pos, char p)
     {
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
         vertically. Returns true if it does, otherwise false*/
     }
+
+    /**
+     * Checks to see if the last token placed resulted in a diagonal win
+     * 
+     * @param pos the position where the last token was placed  
+     * @param p the player who placed the last token
+     * 
+     * @return true IF [last token results in a vertical win] ELSE false
+	 * 
+     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null 
+     * 
+     * @post checkDiagWin = true OR checkDiagWin = false AND board = #board
+     */
 
     public boolean checkDiagWin(BoardPosition pos, char p)
     {

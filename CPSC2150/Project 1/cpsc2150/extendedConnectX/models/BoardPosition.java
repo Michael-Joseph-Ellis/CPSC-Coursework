@@ -18,7 +18,7 @@ public class BoardPosition
     private int Column;
 
     /**
-     * A paramaterized constructor for BoardPosition, accepts 2 integers
+     * A parameterized constructor for BoardPosition, accepts 2 integers
      * 
      * @param aRow the value of a row on the game board 
      * @param aColumn the value of a column on the game board

@@ -145,18 +145,17 @@ public class GameBoard
         /*checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
         vertically. Returns true if it does, otherwise false*/
     }
-
     /**
      * Checks to see if the last token placed resulted in a diagonal win
-     * 
+	  * 
      * @param pos the position where the last token was placed  
      * @param p the player who placed the last token
      * 
-     * @return true IF [last token results in a vertical win] ELSE false
-	 * 
-     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null 
+     * @return true IF [the player has achieved a diagonal win (4 in a row)] ELSE false 
+     *
+     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
      * 
-     * @post checkDiagWin = true OR checkDiagWin = false AND board = #board
+     * @post checkDiagWin = true OR checkDiagWin = false AND board = #board  
      */
 
     public boolean checkDiagWin(BoardPosition pos, char p)
@@ -165,11 +164,32 @@ public class GameBoard
         diagonally. Returns true if it does, otherwise false Note: there are two diagonals to check*/
     }
 
+
+	/** Checks to see what is at a specific position on the board. 
+     * 
+	 * @param pos a position on the game board
+     *
+     * @return [character of token present at argument position]
+     * 
+     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns]
+     * 
+     * @post checkDiagWin = 'X' OR checkDiagWin = 'O' OR checkDiagWin = " " AND board = #board
+     */
     public char whatsAtPos(BoardPosition pos)
     {
         //returns what is in the GameBoard at position pos If no marker is there, it returns a blank space char.
     }
 
+    /**
+     * Returns the number of rows in the game board
+     * 
+     * @return [number of rows in the game board]
+     * 
+     * @pre None
+     * 
+     * @post getNumRows = [number of rows] AND board = #board
+     * 
+     */
     public boolean isPlayerAtPos(BoardPosition pos, char player)
     {
         /*returns true if the player is at pos; otherwise, it returns false. Note: this method will be implemented very
@@ -178,6 +198,16 @@ public class GameBoard
         these two methods could be radically different.*/
     }
 
+    /**
+     * Returns the number of columns in the game board
+     * 
+     * @return [number of columns in the game board]
+     * 
+     * @pre None
+     * 
+     * @post getNumColumns = [number of columns] AND board = #board
+     * 
+     */
     @Override
     public String toString(){
 

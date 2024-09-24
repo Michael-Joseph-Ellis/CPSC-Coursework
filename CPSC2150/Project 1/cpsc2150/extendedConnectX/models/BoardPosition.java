@@ -23,6 +23,8 @@ public class BoardPosition
      * @param aRow the value of a row on the game board 
      * @param aColumn the value of a column on the game board
      * 
+     * @return getRow = aRow AND row = #aRow AND getColumn = aColumn AND column = #aColumn 
+     * 
      * @pre aRow >= 0 AND aColumn >= 0
      * 
      * @post this.Row = aRow AND this.Column = aColumn
@@ -41,7 +43,7 @@ public class BoardPosition
      * 
      * @pre this != null
      * 
-     * @post getRow = aRow AND getColumn = #aColumn
+     * @post getRow = #Row AND Row = #Row AND Column = #Column
      * 
      */
 
@@ -57,7 +59,7 @@ public class BoardPosition
      * 
      * @pre this != null
      * 
-     * @post getRow = #aRow AND getColumn = aColumn
+     * @post getColumn = #Column AND Row = #Row AND Column = #Column
      * 
      */
 
@@ -69,18 +71,18 @@ public class BoardPosition
     /**
      * Standard override for the equals method
      * 
-     * @param obj the object to compare to
+     * @param obj the BoardPosition object to compare to
      * 
-     * @return true if the objects are equal, false otherwise
+     * @return true IF (this.getColumn() == obj.getColumn() AND this.getRow() == obj.getRow()) ELSE false
      * 
      * @pre obj != null
      * 
-     * @post equals = true OR equals = false
+     * @post equals = true OR equals = false AND obj = #obj AND Row = #Row AND Column = #Column
      * 
      */
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(BoardPosition obj)
     {
 
     }
@@ -92,7 +94,7 @@ public class BoardPosition
      * 
      * @pre this != null
      * 
-     * @post toString = "Row: " + this.Row + " Column: " + this.Column
+     * @post toString = "Row: " + this.Row + " Column: " + this.Column AND Column = #Column AND Row = #Row
      * 
      */
 

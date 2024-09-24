@@ -173,21 +173,29 @@ public class GameBoard
      * 
      * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns]
      * 
-     * @post checkDiagWin = 'X' OR checkDiagWin = 'O' OR checkDiagWin = " " AND board = #board
+     * @post the character returned is 'X' or 'O' or ' ' (empty space) AND board = #board 
+     * 
      */
     public char whatsAtPos(BoardPosition pos)
     {
         //returns what is in the GameBoard at position pos If no marker is there, it returns a blank space char.
     }
 
+
+    // PLEASE CHANGE THESE TWO omg -- changed
+    
     /**
-     * Returns the number of rows in the game board
+     * Returns boolean on whether a specified player is at a specified position on the board
+     *
+     * @param pos a position on the game board
+     * @param player the name of the player we are evaluating
      * 
-     * @return [number of rows in the game board]
+     * @return boolean on whether a specified player is at a specified position on the board
      * 
-     * @pre None
+     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND player is some real player
      * 
-     * @post getNumRows = [number of rows] AND board = #board
+     * @post boolean evaluates to true if the player in question is at the position specified on the board
+     * and false if the player in question is not at the specified board position
      * 
      */
     public boolean isPlayerAtPos(BoardPosition pos, char player)
@@ -199,13 +207,13 @@ public class GameBoard
     }
 
     /**
-     * Returns the number of columns in the game board
+     * Override so as to convert the char[][] game board into a string
      * 
-     * @return [number of columns in the game board]
+     * @return string representation of the game board
      * 
-     * @pre None
+     * @pre game board must be of type char[][]
      * 
-     * @post getNumColumns = [number of columns] AND board = #board
+     * @post board = #board and a string representation of the game board that retains the dimensions and values of the game board
      * 
      */
     @Override

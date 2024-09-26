@@ -1,6 +1,6 @@
 
 /*functions.h is where the C std... libraries are defined.*/
-#include "functions.h"
+#include "src/functions.h"
 
 int main(int argc, char *argv[])
 {

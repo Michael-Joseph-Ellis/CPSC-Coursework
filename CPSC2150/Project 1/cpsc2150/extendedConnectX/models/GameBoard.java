@@ -155,7 +155,10 @@ public class GameBoard
      *
      * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
      * 
-     * @post checkDiagWin = true OR checkDiagWin = false AND board = #board  
+     * //@post checkDiagWin = true OR checkDiagWin = false AND board = #board
+     * @post checkDiagWin = Returns true if the last token inserted at position pos on the board by player p
+     * results in a diagonal win for that player. Tokens diagonal to the token at pos must be the required length to
+     * count as a win and and all tokens in diagonal must be player p's tokens. Else returns false
      */
 
     public boolean checkDiagWin(BoardPosition pos, char p)

@@ -73,12 +73,15 @@ public class BoardPosition
      * 
      * @param obj the BoardPosition object to compare to
      * 
-     * @return true IF (this.getColumn() == obj.getColumn() AND this.getRow() == obj.getRow()) ELSE false
+     * @return true OR false AND obj = #obj AND Row = #Row AND Column = #Column
      * 
      * @pre obj != null
      * 
-     * @post equals = true OR equals = false AND obj = #obj AND Row = #Row AND Column = #Column
-     * 
+     * //@post equals = true OR equals = false AND obj = #obj AND Row = #Row AND Column = #Column
+     * @post  returns true IF (this.getColumn() == obj.getColumn() AND this.getRow() == obj.getRow())
+     * ELSE returns false.
+     * obj = #obj AND Row = #Row AND Column = #Column
+     *
      */
 
     @Override
@@ -94,7 +97,8 @@ public class BoardPosition
      * 
      * @pre this != null
      * 
-     * @post toString = "Row: " + this.Row + " Column: " + this.Column AND Column = #Column AND Row = #Row
+     * #@post toString = "Row: " + this.Row + " Column: " + this.Column AND Column = #Column AND Row = #Row
+     * @post toString =  this.Row + "," + this.Column AND Column = #Column AND Row = #Row
      * 
      */
 

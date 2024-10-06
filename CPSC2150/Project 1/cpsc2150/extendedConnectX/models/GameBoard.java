@@ -75,7 +75,10 @@ public class GameBoard
      * 
      * @pre 0 <= c < [number of columns] AND [the last move was made in column c]
      * 
-     * @post checkForWin = true OR checkForWin = false AND board = #board
+     * //@post checkForWin = true OR checkForWin = false AND board = #board
+     * @post returns true if last token placed completes max number of consecutive same markers to win either Vertically, Horizontally, or Diagonally
+     * else it returns false if these conditions are not met
+     * AND board = #board
      * 
      */
 
@@ -90,12 +93,11 @@ public class GameBoard
      * Checks to see if the game has resulted in a tie
      * 
      * @return true IF [all cells in board are filled] ELSE false
-	  *
-     * @post checkTie = true OR checkTie = false AND board = #board	
-	  *
+     *
      * @pre None
      * 
-     * @post checkTie = true OR checkTie = false board = #board
+     * //@post checkTie = true OR checkTie = false board = #board
+     * @post returns true if all cells in the board are filled with tokens, else returns false. board = #board
      */
 
     public boolean checkTie()
@@ -116,8 +118,9 @@ public class GameBoard
      * 
      * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
 	 * 
-     * @post checkHorizWin = true OR checkHorizWin = false AND board = #board
-     * 
+     * //@post checkHorizWin = true OR checkHorizWin = false AND board = #board
+     * @post checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in
+     * a row horizontally of the same markers. Returns true if it does, otherwise false. board = #board
      */
 
     public boolean checkHorizWin(BoardPosition pos, char p)
@@ -136,7 +139,9 @@ public class GameBoard
      * 
      * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
      * 
-     * @post checkVerWin = true OR checkVertWin = false AND board = #board
+     * //@post checkVerWin = true OR checkVertWin = false AND board = #board
+     * @post checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
+     * vertically of the same markers. Returns true if it does, otherwise false. board = #board
      * 
      */
 
@@ -151,14 +156,15 @@ public class GameBoard
      * @param pos the position where the last token was placed  
      * @param p the player who placed the last token
      * 
-     * @return true IF [the player has achieved a diagonal win (4 in a row)] ELSE false 
+     * @return true IF [the player has achieved a diagonal win (5 in a row)] ELSE false
      *
      * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
      * 
      * //@post checkDiagWin = true OR checkDiagWin = false AND board = #board
      * @post checkDiagWin = Returns true if the last token inserted at position pos on the board by player p
      * results in a diagonal win for that player. Tokens diagonal to the token at pos must be the required length to
-     * count as a win and and all tokens in diagonal must be player p's tokens. Else returns false
+     * count as a win and and all tokens in diagonal must be player p's tokens. Else returns false.
+     * Note: there are two diagonals to check
      */
 
     public boolean checkDiagWin(BoardPosition pos, char p)

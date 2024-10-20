@@ -16,6 +16,9 @@ public class GameBoard
 {
 
     private char[][] board;
+    public static final int MAX_ROW = 9;
+    public static final int MAX_COLUMN = 7;        
+    public static final int NUM_TO_WIN = 5;
 
     /**
      * A constructor for GameBoard. 
@@ -30,6 +33,25 @@ public class GameBoard
     public GameBoard()
     {
         
+    }
+
+
+
+    /**
+     * A dynamic constructor for GameBoard letting you pass the initial board state. Useful for test cases
+     *
+     * @return None
+     *
+     * @param initialBoard the initial board state as a char[][]
+     *
+     * @pre [num rows of initialBoard] = [number of rows] AND [num columns of initialBoard] = [number of columns]
+     *
+     * @post A new GameBoard is initialized with a board equivalent to the initialBoard specified.
+     */
+    public GameBoard(char[][] initialBoard)
+    {
+        // Initialize the board with the passed values
+        this.board = initialBoard;
     }
 
     /**

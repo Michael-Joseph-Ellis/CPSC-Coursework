@@ -57,7 +57,7 @@ public class GameScreen {
      * @return [int that holds the user keyboard input]
      */
     public int getInput(){
-
+        
     }
 
     /**
@@ -81,7 +81,7 @@ public class GameScreen {
      */
     public static void main(String[] args)
     {
-
+        
     }
 }
 

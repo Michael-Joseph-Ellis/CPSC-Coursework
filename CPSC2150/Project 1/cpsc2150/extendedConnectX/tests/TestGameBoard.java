@@ -42,7 +42,7 @@ public class TestGameBoard {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
         };
 
-        String exp = expectedBoardTostring(expectedBoard);
+        String exp = expectedBoardToString(expectedBoard);
 
         assertEquals(exp, obs);
     }
@@ -225,7 +225,7 @@ public class TestGameBoard {
         // Drop new token
         gb.dropToken('O', 0);
 
-        boardPos = new BoardPosition(8, 0);
+        BoardPosition boardPos = new BoardPosition(8, 0);
 
         assertEquals(false, gb.checkHorizWin(boardPos, 'O'));
     }
@@ -259,7 +259,7 @@ public class TestGameBoard {
         // Drop new token
         gb.dropToken('X', 6);
 
-        boardPos = new BoardPosition(8, 6);
+        BoardPosition boardPos = new BoardPosition(8, 6);
 
         assertEquals(true, gb.checkHorizWin(boardPos, 'X'));
     }
@@ -293,7 +293,7 @@ public class TestGameBoard {
         // Drop new token
         gb.dropToken('O', 6);
 
-        boardPos = new BoardPosition(5, 6);
+        BoardPosition boardPos = new BoardPosition(5, 6);
 
         assertEquals(true, gb.checkHorizWin(boardPos, 'O'));
     }
@@ -328,7 +328,7 @@ public class TestGameBoard {
         // Drop new token
         gb.dropToken('X', 6);
 
-        boardPos = new BoardPosition(4, 6);
+        BoardPosition boardPos = new BoardPosition(4, 6);
 
         assertEquals(false, gb.checkHorizWin(boardPos, 'X'));
     }
@@ -791,7 +791,7 @@ public class TestGameBoard {
     @Test
     public void test_checkTie_halfFull_false() {
 
-        char[][] expectedBoard = {
+        char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -819,7 +819,7 @@ public class TestGameBoard {
     @Test
     public void test_checkTie_PlayerXWin_false() {
 
-        char[][] expectedBoard = {
+        char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -887,7 +887,7 @@ public class TestGameBoard {
     @Test
     public void test_whatsAtPos_empty_pos4_1() {
 
-        char[][] expectedBoard = {
+        char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -914,7 +914,7 @@ public class TestGameBoard {
     @Test
     public void test_whatsAtPos_markerO_pos3_4() {
 
-        char[][] expectedBoard = {
+        char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -936,75 +936,74 @@ public class TestGameBoard {
             }
         }
 
-        assertEquals('X', gb.whatsAtPos(new BoardPosition(3, 4)));
+        assertEquals('O', gb.whatsAtPos(new BoardPosition(3, 4)));
     }
-}
 
-@Test
-public void test_WhatsAtPos_markerO_pos8_6() {
-    char[][] expectedBoard = {
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', 'O'}
-    };
-    GameBoard gb = new GameBoard();
-    for (int row = initialBoard.length - 1; row >= 0; row--) {
-        for (int col = 0; col < initialBoard[row].length; col++) {
-            char token = initialBoard[row][col];
-            if (token != ' ') {
-                gb.dropToken(token, col);
+    @Test
+    public void test_WhatsAtPos_markerO_pos8_6() {
+        char[][] initialBoard = {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', 'O'}
+        };
+        GameBoard gb = new GameBoard();
+        for (int row = initialBoard.length - 1; row >= 0; row--) {
+            for (int col = 0; col < initialBoard[row].length; col++) {
+                char token = initialBoard[row][col];
+                if (token != ' ') {
+                    gb.dropToken(token, col);
+                }
             }
         }
+        assertEquals('O', gb.whatsAtPos(new BoardPosition(8, 6)));
     }
-    assertEquals('O', gb.whatsAtPos(new BoardPosition(8, 6)));
-}
 
-@Test
-public void test_whatsAtPos_markerO_pos0_0() {
-    char[][] expectedBoard = {
-            {'X', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'O', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'X', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'O', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'X', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'O', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'X', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'O', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'X', ' ', ' ', ' ', ' ', ' ', ' '}
-    };
-    GameBoard gb = new GameBoard();
-    for (int row = initialBoard.length - 1; row >= 0; row--) {
-        for (int col = 0; col < initialBoard[row].length; col++) {
-            char token = initialBoard[row][col];
-            if (token != ' ') {
-                gb.dropToken(token, col);
+    @Test
+    public void test_whatsAtPos_markerO_pos0_0() {
+        char[][] initialBoard = {
+                {'X', ' ', ' ', ' ', ' ', ' ', ' '},
+                {'O', ' ', ' ', ' ', ' ', ' ', ' '},
+                {'X', ' ', ' ', ' ', ' ', ' ', ' '},
+                {'O', ' ', ' ', ' ', ' ', ' ', ' '},
+                {'X', ' ', ' ', ' ', ' ', ' ', ' '},
+                {'O', ' ', ' ', ' ', ' ', ' ', ' '},
+                {'X', ' ', ' ', ' ', ' ', ' ', ' '},
+                {'O', ' ', ' ', ' ', ' ', ' ', ' '},
+                {'X', ' ', ' ', ' ', ' ', ' ', ' '}
+        };
+        GameBoard gb = new GameBoard();
+        for (int row = initialBoard.length - 1; row >= 0; row--) {
+            for (int col = 0; col < initialBoard[row].length; col++) {
+                char token = initialBoard[row][col];
+                if (token != ' ') {
+                    gb.dropToken(token, col);
+                }
             }
         }
+
+        assertEquals('X', gb.whatsAtPos(new BoardPosition(0, 0)));
     }
 
-    assertEquals('X', gb.whatsAtPos(new BoardPosition(0, 0)));
-}
 
+    /* The following tests are for the isPlayerAtPos method.
+     * test_isPlayerAtPos_playerO_pos8_0
+     * test_isPlayerAtPos_playerX_pos1_2
+     * test_isPlayerAtPos_playerX_pos0_0
+     * test_isPlayerAtPos_playerO_pos8_6
+     * test_isPlayerAtPos_playerX_pos2_3
+     *
+     * - Adam Niemczura
+     */
 
-/* The following tests are for the isPlayerAtPos method.
- * test_isPlayerAtPos_playerO_pos8_0
- * test_isPlayerAtPos_playerX_pos1_2
- * test_isPlayerAtPos_playerX_pos0_0
- * test_isPlayerAtPos_playerO_pos8_6
- * test_isPlayerAtPos_playerX_pos2_3
- *
- * - Adam Niemczura
- */
-
-//Tests for isPlayerAtPos (5 tests)
-@Test
-public void test_isPlayerAtPos_playerO_pos8_0() {
+    //Tests for isPlayerAtPos (5 tests)
+    @Test
+    public void test_isPlayerAtPos_playerO_pos8_0() {
         /*
         char[][] expectedBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -1019,17 +1018,17 @@ public void test_isPlayerAtPos_playerO_pos8_0() {
         };
         */
 
-    GameBoard gb = new GameBoard();
-    gb.dropToken('X', 0);
-    gb.dropToken('O', 4);
+        GameBoard gb = new GameBoard();
+        gb.dropToken('X', 0);
+        gb.dropToken('O', 4);
 
-    BoardPosition bp = new BoardPosition(8, 0)
+        BoardPosition bp = new BoardPosition(8, 0);
 
-    assertEquals(gb.isPlayerAtPos(bp, 'O'), false)
-}
+        assertEquals(gb.isPlayerAtPos(bp, 'O'), false);
+    }
 
-@Test
-public void test_isPlayerAtPos_playerX_pos1_2() {
+    @Test
+    public void test_isPlayerAtPos_playerX_pos1_2() {
         /*
         char[][] grid = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -1044,34 +1043,34 @@ public void test_isPlayerAtPos_playerX_pos1_2() {
         };
         */
 
-    GameBoard gb = new GameBoard();
+        GameBoard gb = new GameBoard();
 
-    gb.dropToken('O', 2);
-    gb.dropToken('X', 2);
-    gb.dropToken('O', 2); //
-    gb.dropToken('X', 2); //
-    gb.dropToken('O', 2);
-    gb.dropToken('X', 2);
-    gb.dropToken('O', 2); //
-    gb.dropToken('X', 2); //
-    gb.dropToken('X', 2);
+        gb.dropToken('O', 2);
+        gb.dropToken('X', 2);
+        gb.dropToken('O', 2); //
+        gb.dropToken('X', 2); //
+        gb.dropToken('O', 2);
+        gb.dropToken('X', 2);
+        gb.dropToken('O', 2); //
+        gb.dropToken('X', 2); //
+        gb.dropToken('X', 2);
 
-    gb.dropToken('X', 5);
-    gb.dropToken('X', 5);
-    gb.dropToken('X', 5);
-    gb.dropToken('O', 5);
+        gb.dropToken('X', 5);
+        gb.dropToken('X', 5);
+        gb.dropToken('X', 5);
+        gb.dropToken('O', 5);
 
-    gb.dropToken('O', 6);
-    gb.dropToken('O', 6);
-    gb.dropToken('O', 6);
+        gb.dropToken('O', 6);
+        gb.dropToken('O', 6);
+        gb.dropToken('O', 6);
 
-    BoardPosition bp = new BoardPosition(1, 2)
+        BoardPosition bp = new BoardPosition(1, 2);
 
-    assertEquals(gb.isPlayerAtPos(bp, 'X'), true)
-}
+        assertEquals(gb.isPlayerAtPos(bp, 'X'), true);
+    }
 
-@Test
-public void test_isPlayerAtPos_playerX_pos0_0() {
+    @Test
+    public void test_isPlayerAtPos_playerX_pos0_0() {
         /*
         char[][] grid = {
                 {'O', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -1086,28 +1085,28 @@ public void test_isPlayerAtPos_playerX_pos0_0() {
         };
         */
 
-    GameBoard gb = new GameBoard();
-    gb.dropToken('X', 0);
-    gb.dropToken('O', 0);
+        GameBoard gb = new GameBoard();
+        gb.dropToken('X', 0);
+        gb.dropToken('O', 0);
 
-    gb.dropToken('X', 0);
-    gb.dropToken('O', 0);
+        gb.dropToken('X', 0);
+        gb.dropToken('O', 0);
 
-    gb.dropToken('X', 0);
-    gb.dropToken('O', 0);
+        gb.dropToken('X', 0);
+        gb.dropToken('O', 0);
 
-    gb.dropToken('X', 0);
-    gb.dropToken('O', 0);
+        gb.dropToken('X', 0);
+        gb.dropToken('O', 0);
 
-    gb.dropToken('O', 0);
+        gb.dropToken('O', 0);
 
-    BoardPosition bp = new BoardPosition(0, 0)
+        BoardPosition bp = new BoardPosition(0, 0);
 
-    assertEquals(gb.isPlayerAtPos(bp, 'X'), false)
-}
+        assertEquals(gb.isPlayerAtPos(bp, 'X'), false);
+    }
 
-@Test
-public void test_isPlayerAtPos_playerO_pos8_6() {
+    @Test
+    public void test_isPlayerAtPos_playerO_pos8_6() {
         /*
         char[][] grid = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -1122,17 +1121,17 @@ public void test_isPlayerAtPos_playerO_pos8_6() {
         };
         */
 
-    GameBoard gb = new GameBoard();
+        GameBoard gb = new GameBoard();
 
-    gb.dropToken('X', 6);
+        gb.dropToken('X', 6);
 
-    BoardPosition bp = new BoardPosition(8, 6)
+        BoardPosition bp = new BoardPosition(8, 6);
 
-    assertEquals(gb.isPlayerAtPos(bp, 'O'), false)
-}
+        assertEquals(gb.isPlayerAtPos(bp, 'O'), false);
+    }
 
-@Test
-public void test_isPlayerAtPos_playerX_pos2_3() {
+    @Test
+    public void test_isPlayerAtPos_playerX_pos2_3() {
         /*
         char[][] grid = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -1147,34 +1146,34 @@ public void test_isPlayerAtPos_playerX_pos2_3() {
         };
         */
 
-    GameBoard gb = new GameBoard();
+        GameBoard gb = new GameBoard();
 
-    gb.dropToken('O', 2);
-    gb.dropToken('X', 2);
-    gb.dropToken('O', 2);
-    gb.dropToken('O', 2);
-    gb.dropToken('X', 2);
+        gb.dropToken('O', 2);
+        gb.dropToken('X', 2);
+        gb.dropToken('O', 2);
+        gb.dropToken('O', 2);
+        gb.dropToken('X', 2);
 
-    gb.dropToken('X', 3);
+        gb.dropToken('X', 3);
 
-    BoardPosition bp = new BoardPosition(2, 3)
+        BoardPosition bp = new BoardPosition(2, 3);
 
-    assertEquals(gb.isPlayerAtPos(bp, 'X'), false)
-}
+        assertEquals(gb.isPlayerAtPos(bp, 'X'), false);
+    }
 
-/* The following tests are for the dropToken method.
- * test_dropToken_playerX_column0_regular
- * test_dropToken_playerO_column6_filled
- * test_dropToken_playerX_column3_empty
- * test_dropToken_playerO_column4_Vwin
- * test_dropToken_playerX_column3_Hwin
- *
- * - Adam Niemczura
- */
+    /* The following tests are for the dropToken method.
+     * test_dropToken_playerX_column0_regular
+     * test_dropToken_playerO_column6_filled
+     * test_dropToken_playerX_column3_empty
+     * test_dropToken_playerO_column4_Vwin
+     * test_dropToken_playerX_column3_Hwin
+     *
+     * - Adam Niemczura
+     */
 
-//Tests for dropToken (5 tests)
-@Test
-public void test_dropToken_playerX_column0_regular() {
+    //Tests for dropToken (5 tests)
+    @Test
+    public void test_dropToken_playerX_column0_regular() {
         /*
         Initial board set up
         char[][] grid = {
@@ -1189,237 +1188,237 @@ public void test_dropToken_playerX_column0_regular() {
                 {' ', 'X', 'X', 'O', 'O', 'O', 'X'},
         };
         */
-    GameBoard gb = new GameBoard();
+        GameBoard gb = new GameBoard();
 
-    gb.dropToken('X', 1);
-    gb.dropToken('X', 1);
-    gb.dropToken('O', 1);
+        gb.dropToken('X', 1);
+        gb.dropToken('X', 1);
+        gb.dropToken('O', 1);
 
-    gb.dropToken('X', 2);
+        gb.dropToken('X', 2);
 
-    gb.dropToken('O', 3);
-    gb.dropToken('X', 3);
+        gb.dropToken('O', 3);
+        gb.dropToken('X', 3);
 
-    gb.dropToken('O', 4);
-    gb.dropToken('O', 4);
-    gb.dropToken('O', 4);
-    gb.dropToken('X', 4);
+        gb.dropToken('O', 4);
+        gb.dropToken('O', 4);
+        gb.dropToken('O', 4);
+        gb.dropToken('X', 4);
 
-    gb.dropToken('O', 5);
-    gb.dropToken('X', 5);
+        gb.dropToken('O', 5);
+        gb.dropToken('X', 5);
 
-    gb.dropToken('X', 6);
-    gb.dropToken('O', 6);
-    gb.dropToken('O', 6);
-    gb.dropToken('X', 6);
+        gb.dropToken('X', 6);
+        gb.dropToken('O', 6);
+        gb.dropToken('O', 6);
+        gb.dropToken('X', 6);
 
-    gb.dropToken('X', 0); //the one change from pre to post state
+        gb.dropToken('X', 0); //the one change from pre- to post-state
 
-    char[][] expectedBoard = {
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', 'X', ' ', 'X'},
-            {' ', 'O', ' ', ' ', 'O', ' ', 'O'},
-            {' ', 'X', ' ', 'X', 'O', 'X', 'O'},
-            {'X', 'X', 'X', 'O', 'O', 'O', 'X'},
-    };
+        char[][] expectedBoard = {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', 'X', ' ', 'X'},
+                {' ', 'O', ' ', ' ', 'O', ' ', 'O'},
+                {' ', 'X', ' ', 'X', 'O', 'X', 'O'},
+                {'X', 'X', 'X', 'O', 'O', 'O', 'X'},
+        };
 
-    String observed = gb.toString();
+        String observed = gb.toString();
 
-    String expected = expectedBoardToString(expectedBoard);
+        String expected = expectedBoardToString(expectedBoard);
 
-    assertEquals(expected, observed);
-}
+        assertEquals(expected, observed);
+    }
 
-@Test
-public void test_dropToken_playerO_column6_filled() {
-    char[][] initialBoard = {
-            {'O', 'X', 'O', 'O', 'X', 'O', ' '},
-            {'X', 'X', 'O', 'X', 'X', 'X', 'X'},
-            {'O', 'O', 'X', 'O', 'O', 'X', 'O'},
-            {'O', 'X', 'O', 'O', 'X', 'O', 'O'},
-            {'X', 'X', 'O', 'X', 'X', 'O', 'X'},
-            {'O', 'O', 'X', 'O', 'O', 'X', 'O'},
-            {'X', 'O', 'O', 'X', 'X', 'O', 'O'},
-            {'X', 'X', 'O', 'O', 'O', 'O', 'X'},
-            {'O', 'O', 'X', 'O', 'O', 'X', 'O'}
-    };
+    @Test
+    public void test_dropToken_playerO_column6_filled() {
+        char[][] initialBoard = {
+                {'O', 'X', 'O', 'O', 'X', 'O', ' '},
+                {'X', 'X', 'O', 'X', 'X', 'X', 'X'},
+                {'O', 'O', 'X', 'O', 'O', 'X', 'O'},
+                {'O', 'X', 'O', 'O', 'X', 'O', 'O'},
+                {'X', 'X', 'O', 'X', 'X', 'O', 'X'},
+                {'O', 'O', 'X', 'O', 'O', 'X', 'O'},
+                {'X', 'O', 'O', 'X', 'X', 'O', 'O'},
+                {'X', 'X', 'O', 'O', 'O', 'O', 'X'},
+                {'O', 'O', 'X', 'O', 'O', 'X', 'O'}
+        };
 
-    GameBoard gb = new GameBoard();
+        GameBoard gb = new GameBoard();
 
-    // Loop from the bottom row to the top row to set up the board
-    for (int row = initialBoard.length - 1; row >= 0; row--) {
-        for (int col = 0; col < initialBoard[row].length; col++) {
-            char token = initialBoard[row][col];
-            if (token != ' ') {
-                gb.dropToken(token, col);
+        // Loop from the bottom row to the top row to set up the board
+        for (int row = initialBoard.length - 1; row >= 0; row--) {
+            for (int col = 0; col < initialBoard[row].length; col++) {
+                char token = initialBoard[row][col];
+                if (token != ' ') {
+                    gb.dropToken(token, col);
+                }
             }
         }
+
+        //the drop we are testing
+        gb.dropToken('O', 6);
+
+        char[][] expectedBoard = {
+                {'O', 'X', 'O', 'O', 'X', 'O', 'O'},
+                {'X', 'X', 'O', 'X', 'X', 'X', 'X'},
+                {'O', 'O', 'X', 'O', 'O', 'X', 'O'},
+                {'O', 'X', 'O', 'O', 'X', 'O', 'O'},
+                {'X', 'X', 'O', 'X', 'X', 'O', 'X'},
+                {'O', 'O', 'X', 'O', 'O', 'X', 'O'},
+                {'X', 'O', 'O', 'X', 'X', 'O', 'O'},
+                {'X', 'X', 'O', 'O', 'O', 'O', 'X'},
+                {'O', 'O', 'X', 'O', 'O', 'X', 'O'}
+        };
+
+        String observed = gb.toString();
+
+        String expected = expectedBoardToString(expectedBoard);
+
+        assertEquals(expected, observed);
+
     }
 
-    //the drop we are testing
-    gb.dropToken('O', 6);
+    @Test
+    public void test_dropToken_playerX_column3_empty() {
+        GameBoard gb = new GameBoard();
 
-    char[][] expectedBoard = {
-            {'O', 'X', 'O', 'O', 'X', 'O', 'O'},
-            {'X', 'X', 'O', 'X', 'X', 'X', 'X'},
-            {'O', 'O', 'X', 'O', 'O', 'X', 'O'},
-            {'O', 'X', 'O', 'O', 'X', 'O', 'O'},
-            {'X', 'X', 'O', 'X', 'X', 'O', 'X'},
-            {'O', 'O', 'X', 'O', 'O', 'X', 'O'},
-            {'X', 'O', 'O', 'X', 'X', 'O', 'O'},
-            {'X', 'X', 'O', 'O', 'O', 'O', 'X'},
-            {'O', 'O', 'X', 'O', 'O', 'X', 'O'}
-    };
+        gb.dropToken('X', 3);
 
-    String observed = gb.toString();
+        char[][] expectedBoard = {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', 'X', ' ', ' ', ' '}
+        };
 
-    String expected = expectedBoardToString(expectedBoard);
+        String observed = gb.toString();
 
-    assertEquals(expected, observed);
+        String expected = expectedBoardToString(expectedBoard);
 
-}
+        assertEquals(expected, observed);
+    }
 
-@Test
-public void test_dropToken_playerX_column3_empty() {
-    GameBoard gb = new GameBoard();
+    @Test
+    public void test_dropToken_playerO_column4_Vwin() {
+        char[][] initialBoard = {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', 'O', ' ', ' '},
+                {' ', ' ', ' ', ' ', 'O', ' ', ' '},
+                {' ', ' ', ' ', ' ', 'O', ' ', 'X'},
+                {'X', 'X', ' ', ' ', 'O', 'X', 'X'}
+        };
 
-    gb.dropToken('X', 3);
+        GameBoard gb = new GameBoard();
 
-    char[][] expectedBoard = {
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', 'X', ' ', ' ', ' '}
-    };
-
-    String observed = gb.toString();
-
-    String expected = expectedBoardToString(expectedBoard);
-
-    assertEquals(expected, observed);
-}
-
-@Test
-public void test_dropToken_playerO_column4_Vwin() {
-    char[][] initialBoard = {
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', 'O', ' ', ' '},
-            {' ', ' ', ' ', ' ', 'O', ' ', ' '},
-            {' ', ' ', ' ', ' ', 'O', ' ', 'X'},
-            {'X', 'X', ' ', ' ', 'O', 'X', 'X'}
-    };
-
-    GameBoard gb = new GameBoard();
-
-    // Loop from the bottom row to the top row to set up the board
-    for (int row = initialBoard.length - 1; row >= 0; row--) {
-        for (int col = 0; col < initialBoard[row].length; col++) {
-            char token = initialBoard[row][col];
-            if (token != ' ') {
-                gb.dropToken(token, col);
+        // Loop from the bottom row to the top row to set up the board
+        for (int row = initialBoard.length - 1; row >= 0; row--) {
+            for (int col = 0; col < initialBoard[row].length; col++) {
+                char token = initialBoard[row][col];
+                if (token != ' ') {
+                    gb.dropToken(token, col);
+                }
             }
         }
+
+        //the drop we are testing
+        gb.dropToken('O', 4);
+
+        char[][] expectedBoard = {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', 'O', ' ', ' '},
+                {' ', ' ', ' ', ' ', 'O', ' ', ' '},
+                {' ', ' ', ' ', ' ', 'O', ' ', ' '},
+                {' ', ' ', ' ', ' ', 'O', ' ', 'X'},
+                {'X', 'X', ' ', ' ', 'O', 'X', 'X'}
+        };
+
+        String observed = gb.toString();
+
+        String expected = expectedBoardToString(expectedBoard);
+
+        assertEquals(expected, observed);
     }
 
-    //the drop we are testing
-    gb.dropToken('O', 4);
+    @Test
+    public void test_dropToken_playerX_column3_Hwin() {
+        char[][] initialBoard = {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', 'O'},
+                {'X', ' ', ' ', ' ', ' ', 'X', 'O'},
+                {'X', 'X', 'X', ' ', 'X', 'X', 'X'}
+        };
 
-    char[][] expectedBoard = {
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', 'O', ' ', ' '},
-            {' ', ' ', ' ', ' ', 'O', ' ', ' '},
-            {' ', ' ', ' ', ' ', 'O', ' ', ' '},
-            {' ', ' ', ' ', ' ', 'O', ' ', 'X'},
-            {'X', 'X', ' ', ' ', 'O', 'X', 'X'}
-    };
+        GameBoard gb = new GameBoard();
 
-    String observed = gb.toString();
-
-    String expected = expectedBoardToString(expectedBoard);
-
-    assertEquals(expected, observed);
-}
-
-@Test
-public void test_dropToken_playerX_column3_Hwin() {
-    char[][] initialBoard = {
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', 'O'},
-            {'X', ' ', ' ', ' ', ' ', 'X', 'O'},
-            {'X', 'X', 'X', ' ', 'X', 'X', 'X'}
-    };
-
-    GameBoard gb = new GameBoard();
-
-    // Loop from the bottom row to the top row to set up the board
-    for (int row = initialBoard.length - 1; row >= 0; row--) {
-        for (int col = 0; col < initialBoard[row].length; col++) {
-            char token = initialBoard[row][col];
-            if (token != ' ') {
-                gb.dropToken(token, col);
+        // Loop from the bottom row to the top row to set up the board
+        for (int row = initialBoard.length - 1; row >= 0; row--) {
+            for (int col = 0; col < initialBoard[row].length; col++) {
+                char token = initialBoard[row][col];
+                if (token != ' ') {
+                    gb.dropToken(token, col);
+                }
             }
         }
+
+        //the drop we are testing
+        gb.dropToken('X', 3);
+
+        char[][] expectedBoard = {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', 'O'},
+                {'X', ' ', ' ', ' ', ' ', 'X', 'O'},
+                {'X', 'X', 'X', 'X', 'X', 'X', 'X'}
+        };
+
+        String observed = gb.toString();
+
+        String expected = expectedBoardToString(expectedBoard);
+
+        assertEquals(expected, observed);
     }
 
-    //the drop we are testing
-    gb.dropToken('X', 3);
 
-    char[][] expectedBoard = {
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', 'O'},
-            {'X', ' ', ' ', ' ', ' ', 'X', 'O'},
-            {'X', 'X', 'X', 'X', 'X', 'X', 'X'}
-    };
+    private static String expectedBoardToString(char[][] gb) {
+        StringBuilder board = new StringBuilder();
 
-    String observed = gb.toString();
-
-    String expected = expectedBoardToString(expectedBoard);
-
-    assertEquals(expected, observed);
-}
-
-
-private static String expectedBoardToString(char[][] gb) {
-    StringBuilder board = new StringBuilder();
-
-    for (int i = 0; i < (MAX_COLUMN); i++) {
-        board.append("|").append(i).append("");
-    }
-
-    board.append("|\n");
-
-    for (int i = 0; i < (MAX_ROW - 1); i++) {
-        for (int j = 0; j < MAX_COLUMN; j++) {
-            board.append("|").append(gb[i][j]).append("");
+        for (int i = 0; i < (MAX_COLUMN); i++) {
+            board.append("|").append(i).append("");
         }
+
         board.append("|\n");
+
+        for (int i = 0; i < (MAX_ROW - 1); i++) {
+            for (int j = 0; j < MAX_COLUMN; j++) {
+                board.append("|").append(gb[i][j]).append("");
+            }
+            board.append("|\n");
+        }
+        return board.toString();
     }
-    return board.toString();
-}
 }

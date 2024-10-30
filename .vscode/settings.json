@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "functions.h": "c"
+        "functions.h": "c",
+        "stdio.h": "c"
     },
     "java.project.referencedLibraries": [
         "lib/**/*.jar",

@@ -16,9 +16,6 @@ public class GameBoard
 {
 
     private char[][] board;
-    public static final int MAX_ROW = 9;
-    public static final int MAX_COLUMN = 7;        
-    public static final int NUM_TO_WIN = 5;
 
     /**
      * A constructor for GameBoard. 

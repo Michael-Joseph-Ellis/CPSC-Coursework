@@ -51,19 +51,7 @@ public class GameBoard
         this.board = initialBoard;
     }
 
-    /**
-     * A checker to see if a column has a free space, accepts 1 int param
-     * 
-     * @param c the index of the column on the game board
-     * 
-     * @return true IF [the column is free] AND false IF [column is full]
-     * 
-     * @pre 0 <= c < [number of columns]
-     * 
-     * @post checkIfFree = true OR checkIfFree = false AND board = #board
-     * 
-     */
-    
+
     public boolean checkIfFree(int c)
     {
         //returns true if the column can accept another token; false otherwise.

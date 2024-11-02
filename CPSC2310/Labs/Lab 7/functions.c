@@ -28,24 +28,62 @@ node_t* readNodeInfo(FILE* input) {
         exit(1);
     }
 
-    // Since scanset reads information as a char, i need to first store month, day, and year 
+    // since scanset reads information as a char, i need to first store month, day, and year 
     // as chars and convert them from chars to ints.
-    char month_str[10], day_str[3], year_str[5];
+    char day_str[3], year_str[5];
 
-    fscanf(input, "%49[^,],%49[^,],%9[^,],%14[^,]%9[^,],%2[^,],%4[^\n]\n",
+    // had problems reading the entire line due to the way csv is formatted and how fgets and 
+    // fscanf works so i had to use a buffer here with sscanf to correctly parse from the file 
+    char buffer[256];
+    if (fgets(buffer, sizeof(buffer), input) == NULL) {
+        free(new_node);
+        return NULL;
+    }
+
+    int fields_read = sscanf(buffer, " %49[^,] , %49[^,] , %9[^,] , %2[^,] , %4[^,] , %9[^,] , %14[^\n]\n",
                              new_node->first_name,
                              new_node->last_name,
+                             new_node->birthday.month,
+                             day_str,
+                             year_str,
                              new_node->major,
-                             new_node->communication,
-                             month_str, day_str, year_str);
+                             new_node->communication);
 
-    // convert date strings to integers using atoi()
-    new_node->birthday.month = atoi(month_str);
+    printf("Fields read: %d\n", fields_read);
+
+    if (fields_read != 7) {
+        fprintf(stderr, "Error reading input data. Expected 7 fields but got %d.\n", fields_read);
+        free(new_node);
+        return NULL;
+    }
+
     new_node->birthday.day = atoi(day_str);
     new_node->birthday.year = atoi(year_str);
 
     new_node->next = NULL;
     return new_node;
+}
+
+void printList(FILE* output, node_t* head) {
+    if (head == NULL) {
+        fprintf(stderr, "The list is empty.\n");
+        return;
+    }
+
+    printBorder(output);
+    fprintf(output, "LIST INFO:\n\n");
+
+    node_t* temp = head;
+    while (temp != NULL) {
+        fprintf(output, "Name: %s %s\n", temp->first_name, temp->last_name);
+        fprintf(output, "Date of Birth: %s %d, %d\n", 
+                temp->birthday.month, temp->birthday.day, temp->birthday.year);
+        fprintf(output, "Degree: %s\n", temp->major);
+        fprintf(output, "Preferred method of communication: %s\n\n", temp->communication);
+        temp = temp->next;
+    }
+
+    printBorder(output);
 }
 
 void add(node_t** node, node_t** head) {
@@ -59,28 +97,6 @@ void add(node_t** node, node_t** head) {
         }
         temp->next = *node;
     }
-}
-
-void printList(FILE* output, node_t* head) {
-    if (head == NULL) {
-        fprintf(stderr, "The list is empty.\n");
-        exit(1);
-    }
-
-    printBorder(output);
-    fprintf(output, "LIST INFO:\n");
-
-    node_t* temp = head;
-    while (temp != NULL) {
-        fprintf(output, "Name: %s %s\n", temp->first_name, temp->last_name);
-        fprintf(output, "Date of Birth: %d %d, %d\n", 
-                temp->birthday.month, temp->birthday.day, temp->birthday.year);
-        fprintf(output, "Degree: %s\n", temp->major);
-        fprintf(output, "Preferred method of communication: %s\n", temp->communication);
-        temp = temp->next;
-    }
-
-    printBorder(output);
 }
 
 void printBorder(FILE* output) {

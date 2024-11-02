@@ -18,6 +18,8 @@ int main(int argc, char* argv[]) {
 
     // initializing the head of linked list as NULL
     node_t* head = NULL;
+
+    // head = createList(input, &head);
     
     printList(output, createList(input, &head));
 

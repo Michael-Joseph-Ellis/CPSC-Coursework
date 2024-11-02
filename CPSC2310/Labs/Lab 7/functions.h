@@ -19,8 +19,8 @@
 
 // Struct to represent the birthday of the student 
 typedef struct {
+    char month[10];
     int day;
-    int month;
     int year;
 } birthday_t;
 

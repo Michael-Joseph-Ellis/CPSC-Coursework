@@ -1,10 +1,20 @@
 package cpsc2150.extendedConnectX.views;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-/*Ryan Chen, Michael Ellis, Cooper Taylor, Adam Niemczura
+/*
 
+Michael Ellis - Michael-Joseph-Ellis
 
+Ryan Chen - rchen55
+
+Cooper Taylor - Cooper-Taylor
+
+Adam Niemczura - AdamNiem
 
  */
+
 public class GameScreen {
 
     /**
@@ -33,7 +43,7 @@ public class GameScreen {
     }
 
     /**
-     * Gets the input from the player and uses that input to modify the gamestate based on what input the player provides
+     * Gets the input from the player and uses that input to modify the game state based on what input the player provides
      *
      * @pre user must use keyboard input only AND [user input is a single character]
      *
@@ -42,22 +52,13 @@ public class GameScreen {
      *
      * @return [char that holds the user keyboard input]
      */
-    public char getInput(){
+    public char getInput() throws IOException {
 
-    }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    /**
-     * Gets the input from the player and uses that input to modify the gamestate based on what input the player provides
-     *
-     * @pre user must use keyboard input only AND [user input is an integer]
-     *
-     * @post Returns the integer user inputted as a int type after the user has provided keyboard input. .
-     * Keyboard input is filtered to ensure that only the options possible are passed and the corresponding action for that user input is provided
-     *
-     * @return [int that holds the user keyboard input]
-     */
-    public int getInput(){
-        
+            String input = reader.readLine();
+
+            return input.charAt(0);
     }
 
     /**
@@ -84,4 +85,3 @@ public class GameScreen {
         
     }
 }
-

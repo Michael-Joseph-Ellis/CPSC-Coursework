@@ -4,7 +4,6 @@ import cpsc2150.extendedConnectX.models.*;
 
 import static cpsc2150.extendedConnectX.models.GameBoard.MAX_COLUMN;
 import static cpsc2150.extendedConnectX.models.GameBoard.MAX_ROW;
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -27,7 +26,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_GameBoard_Constructor() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         String obs = gb.toString();
 
         char[][] expectedBoard = {
@@ -60,7 +59,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_checkIfFree_col0_free() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -89,7 +88,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_checkIfFree_col0_notFree() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         char[][] initialBoard = {
                 {'X', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -119,7 +118,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_checkIfFree_col6_free() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -150,7 +149,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_checkIfFree_col6_notFree() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', 'O'},
@@ -181,7 +180,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_checkIfFree_empty_col3_free() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         assertEquals(true, gb.checkIfFree(3));
     }
@@ -198,7 +197,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_checkHorizontalWin_playerO_NoWin_pos8_0() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -232,7 +231,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_checkHorizontalWin_playerX_Win_pos8_6() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -266,7 +265,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_checkHorizontalWin_playerO_Win_pos5_6() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -301,7 +300,7 @@ public class TestGameBoard {
 
     @Test
     public void Test_checkHorizontalWin_playerX_NoWin_pos4_6() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -344,7 +343,7 @@ public class TestGameBoard {
 
     @Test
     public void test_checkVertWin_PlayerX_Win_pos4_2() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         for (int i = 0; i <= 3; i++) {
             gb.dropToken('O', 2);
@@ -377,7 +376,7 @@ public class TestGameBoard {
 
     @Test
     public void test_checkVertWin_PlayerO_NoWin_pos3_1() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         for (int i = 0; i <= 1; i++) {gb.dropToken('O', 1);}
         for (int i = 0; i <= 2; i++) {gb.dropToken('X', 1);}
@@ -404,7 +403,7 @@ public class TestGameBoard {
 
     @Test
     public void test_checkVertWin_PlayerX_NoWin_Interrupted_pos5_0() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         for (int i = 0; i <= 1; i++) {
             gb.dropToken('O', 0);
@@ -412,7 +411,7 @@ public class TestGameBoard {
         for (int i = 0; i <= 2; i++) {
             gb.dropToken('X', 0);
         }
-        for (int i = 0; i <= 0; i++) {
+        for (int i = 0; i == 0; i++) {
             gb.dropToken('O', 0);
         }
         for (int i = 0; i <= 2; i++) {
@@ -454,9 +453,9 @@ public class TestGameBoard {
 
     @Test
     public void test_checkDiagWin_PlayerX_DiagWin_pos2_2() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
-        for (int i = 0; i <= 0; i++) {
+        for (int i = 0; i == 0; i++) {
             for (int j = 0; j <= 4; j++) {
                 gb.dropToken('O', j + 2);
             }
@@ -493,7 +492,7 @@ public class TestGameBoard {
 
     @Test
     public void test_checkDiagWin_PlayerO_Win_Boundary_pos0_0() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         for (int i = 0; i <= 2; i++) {
             for (int j = 0; j <= 4; j++) {
@@ -532,7 +531,7 @@ public class TestGameBoard {
 
     @Test
     public void test_checkDiagWin_PlayerX_ValidWin_pos4_0() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         for (int i = 0; i <= 2; i++) {
             for (int j = 0; j <= 4; j++) {
@@ -569,7 +568,7 @@ public class TestGameBoard {
 
     @Test
     public void test_checkDiagWin_PlayerO_ValidDiagWin_pos1_1() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         for (int i = 0; i <= 2; i++) {
             for (int j = 0; j <= 4; j++) {
@@ -608,7 +607,7 @@ public class TestGameBoard {
 
     @Test
     public void test_checkDiagWin_PlayerX_BoundaryWin_pos4_6() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
 
         for (int i = 0; i <= 2; i++) {
@@ -648,7 +647,7 @@ public class TestGameBoard {
 
     @Test
     public void test_checkDiagWin_PlayerO_boundaryWin_pos8_0() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         for (int i = 0; i <= 3; i++) {
             for (int j = 0; j <= i; j++) {
@@ -682,7 +681,7 @@ public class TestGameBoard {
     // damn no spamming for loops for this one 🥱
     @Test
     public void test_checkDiagWin_PlayerX_NoWin_ScatteredTokens_pos3_3() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         gb.dropToken('X', 0);
 
@@ -753,7 +752,7 @@ public class TestGameBoard {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '}
         };
         */
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         assertEquals(false, gb.checkTie());
     }
 
@@ -772,7 +771,7 @@ public class TestGameBoard {
                 {'X', 'O', 'O', 'X', 'X', 'X', 'X'}
         };
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         // Drop the tokens into the board
         // Loop from the bottom row to the top row to set up the board
@@ -803,7 +802,7 @@ public class TestGameBoard {
                 {'X', 'O', 'X', 'O', 'O', 'X', 'X'}
         };
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         // Loop from the bottom row to the top row to set up the board
         for (int row = initialBoard.length - 1; row >= 0; row--) {
             for (int col = 0; col < initialBoard[row].length; col++) {
@@ -831,7 +830,7 @@ public class TestGameBoard {
                 {' ', 'X', 'X', 'X', 'X', 'X', ' '}
         };
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         // Loop from the bottom row to the top row to set up the board
         for (int row = initialBoard.length - 1; row >= 0; row--) {
             for (int col = 0; col < initialBoard[row].length; col++) {
@@ -857,7 +856,7 @@ public class TestGameBoard {
     //Tests for whatsAtPos (5 tests)
     @Test
     public void test_whatsAtPos_markerX_pos8_2() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         char[][] initialBoard = {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -899,7 +898,7 @@ public class TestGameBoard {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '}
         };
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         for (int row = initialBoard.length - 1; row >= 0; row--) {
             for (int col = 0; col < initialBoard[row].length; col++) {
                 char token = initialBoard[row][col];
@@ -926,7 +925,7 @@ public class TestGameBoard {
                 {' ', ' ', ' ', ' ', 'X', ' ', ' '}
         };
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         for (int row = initialBoard.length - 1; row >= 0; row--) {
             for (int col = 0; col < initialBoard[row].length; col++) {
                 char token = initialBoard[row][col];
@@ -952,7 +951,7 @@ public class TestGameBoard {
                 {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', 'O'}
         };
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         for (int row = initialBoard.length - 1; row >= 0; row--) {
             for (int col = 0; col < initialBoard[row].length; col++) {
                 char token = initialBoard[row][col];
@@ -977,7 +976,7 @@ public class TestGameBoard {
                 {'O', ' ', ' ', ' ', ' ', ' ', ' '},
                 {'X', ' ', ' ', ' ', ' ', ' ', ' '}
         };
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         for (int row = initialBoard.length - 1; row >= 0; row--) {
             for (int col = 0; col < initialBoard[row].length; col++) {
                 char token = initialBoard[row][col];
@@ -1018,7 +1017,7 @@ public class TestGameBoard {
         };
         */
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         gb.dropToken('X', 0);
         gb.dropToken('O', 4);
 
@@ -1043,7 +1042,7 @@ public class TestGameBoard {
         };
         */
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         gb.dropToken('O', 2);
         gb.dropToken('X', 2);
@@ -1085,7 +1084,7 @@ public class TestGameBoard {
         };
         */
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
         gb.dropToken('X', 0);
         gb.dropToken('O', 0);
 
@@ -1121,7 +1120,7 @@ public class TestGameBoard {
         };
         */
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         gb.dropToken('X', 6);
 
@@ -1146,7 +1145,7 @@ public class TestGameBoard {
         };
         */
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         gb.dropToken('O', 2);
         gb.dropToken('X', 2);
@@ -1188,7 +1187,7 @@ public class TestGameBoard {
                 {' ', 'X', 'X', 'O', 'O', 'O', 'X'},
         };
         */
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         gb.dropToken('X', 1);
         gb.dropToken('X', 1);
@@ -1247,7 +1246,7 @@ public class TestGameBoard {
                 {'O', 'O', 'X', 'O', 'O', 'X', 'O'}
         };
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         // Loop from the bottom row to the top row to set up the board
         for (int row = initialBoard.length - 1; row >= 0; row--) {
@@ -1284,7 +1283,7 @@ public class TestGameBoard {
 
     @Test
     public void test_dropToken_playerX_column3_empty() {
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         gb.dropToken('X', 3);
 
@@ -1321,7 +1320,7 @@ public class TestGameBoard {
                 {'X', 'X', ' ', ' ', 'O', 'X', 'X'}
         };
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         // Loop from the bottom row to the top row to set up the board
         for (int row = initialBoard.length - 1; row >= 0; row--) {
@@ -1369,7 +1368,7 @@ public class TestGameBoard {
                 {'X', 'X', 'X', ' ', 'X', 'X', 'X'}
         };
 
-        GameBoard gb = new GameBoard();
+        IGameBoard gb = makeBoard();
 
         // Loop from the bottom row to the top row to set up the board
         for (int row = initialBoard.length - 1; row >= 0; row--) {
@@ -1403,22 +1402,26 @@ public class TestGameBoard {
         assertEquals(expected, observed);
     }
 
-
     private static String expectedBoardToString(char[][] gb) {
         StringBuilder board = new StringBuilder();
 
         for (int i = 0; i < (MAX_COLUMN); i++) {
-            board.append("|").append(i).append("");
+            board.append("|").append(i);
         }
 
         board.append("|\n");
 
-        for (int i = 0; i < (MAX_ROW - 1); i++) {
+        for (int i = 0; i < (MAX_ROW); i++) {
             for (int j = 0; j < MAX_COLUMN; j++) {
-                board.append("|").append(gb[i][j]).append("");
+                board.append("|").append(gb[i][j]);
             }
             board.append("|\n");
         }
         return board.toString();
+    }
+
+    public IGameBoard makeBoard()
+    {
+        return new GameBoard();
     }
 }

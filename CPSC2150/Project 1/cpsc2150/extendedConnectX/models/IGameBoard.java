@@ -10,7 +10,7 @@ package cpsc2150.extendedConnectX.models;
  *
  * @ defines: self: the board
  *
- * @ contraints: None?
+ * @ constraints: None?
  *
  */
 
@@ -31,12 +31,12 @@ public interface IGameBoard {
      * @post checkIfFree = true OR checkIfFree = false AND self = #self
      *
      */
-    public default boolean checkIfFree(int c){
+    default boolean checkIfFree(int c){
         return whatsAtPos(new BoardPosition(0,c)) == ' ';
-    };
+    }
 
     // Primary - needs to access board so change can be made
-    public void dropToken(char p, int c);
+    void dropToken(char p, int c);
 
     /**
      * Checks if the last token placed in the specified column resulted in a win.
@@ -54,7 +54,7 @@ public interface IGameBoard {
      *
      */
     // Secondary, just call other check win methods
-    public default boolean checkForWin(int c){
+    default boolean checkForWin(int c){
         int row = 0;
         char player = whatsAtPos(new BoardPosition(row, c));
 
@@ -71,7 +71,7 @@ public interface IGameBoard {
             return true;
 
         return checkDiagWin(currentPos, player);
-    };
+    }
 
     // As long as we have MAX values, we can iterate and ensure all positions are filled
     // So secondary
@@ -86,7 +86,7 @@ public interface IGameBoard {
      * //@post checkTie = true OR checkTie = false board = #board
      * @post returns true if all cells in the board are filled with tokens, else returns false. board = #board
      */
-    public default boolean checkTie(){
+    default boolean checkTie(){
         for (int r = 0; r < MAX_ROW; r++){
             for (int c =0; c < MAX_COLUMN; c++){
                 if (whatsAtPos(new BoardPosition(r,c)) == ' ')
@@ -95,7 +95,7 @@ public interface IGameBoard {
         }
 
         return true;
-    };
+    }
 
     /**
      * Checks to see if the last token placed resulted in a horizontal win
@@ -113,13 +113,13 @@ public interface IGameBoard {
      */
 
     // Like checkTie, we can just use whatsAtPos so Secondary
-    public default boolean checkHorizWin(BoardPosition pos, char p){
+    default boolean checkHorizWin(BoardPosition pos, char p){
         int rightBound = pos.getColumn() + NUM_TO_WIN / 2;
         int leftBound = pos.getColumn() - NUM_TO_WIN / 2;
 
         // Will fail if NUM_TO_WIN >= MAX_COLUMN
         if (leftBound < 0) {
-            rightBound += -leftBound;
+            rightBound += leftBound;
             leftBound = 0;
         }
 
@@ -134,7 +134,7 @@ public interface IGameBoard {
         }
 
         return true;
-    };
+    }
 
     /**
      * Checks to see if the last token placed resulted in a vertical win
@@ -152,7 +152,7 @@ public interface IGameBoard {
      *
      */
     // Secondary (same reasoning)
-    public default boolean checkVertWin(BoardPosition pos, char p){
+    default boolean checkVertWin(BoardPosition pos, char p){
 
         // This should be run on the last token dropped, meaning we don't have to test 'up'
         if (pos.getRow() < MAX_ROW - NUM_TO_WIN) {
@@ -163,7 +163,7 @@ public interface IGameBoard {
         }
 
         return false;
-    };
+    }
 
     /**
      * Checks to see if the last token placed resulted in a diagonal win
@@ -178,16 +178,16 @@ public interface IGameBoard {
      * //@post checkDiagWin = true OR checkDiagWin = false AND board = #board
      * @post checkDiagWin = Returns true if the last token inserted at position pos on the board by player p
      * results in a diagonal win for that player. Tokens diagonal to the token at pos must be the required length to
-     * count as a win and and all tokens in diagonal must be player p's tokens. Else returns false.
+     * count as a win and all tokens in diagonal must be player p's tokens. Else returns false.
      * Note: there are two diagonals to check
      */
     // Secondary (same reasoning)
-    public default boolean checkDiagWin(BoardPosition pos, char p){
+    default boolean checkDiagWin(BoardPosition pos, char p){
         return true;
-    };
+    }
 
     // Primary - needs access to board
-    public char whatsAtPos(BoardPosition pos);
+    char whatsAtPos(BoardPosition pos);
 
     /**
      * Returns boolean on whether a specified player is at a specified position on the board
@@ -204,9 +204,7 @@ public interface IGameBoard {
      *
      */
     // Secondary - only needs whatsAtPos
-    public default boolean isPlayerAtPos(BoardPosition pos, char player){
+    default boolean isPlayerAtPos(BoardPosition pos, char player){
         return whatsAtPos(pos) == player;
-    };
-
-
+    }
 }

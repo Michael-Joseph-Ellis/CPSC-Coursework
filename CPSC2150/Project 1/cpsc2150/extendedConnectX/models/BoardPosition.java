@@ -14,8 +14,8 @@ Adam Niemczura - AdamNiem
 
 public class BoardPosition
 {
-    private int Row;
-    private int Column;
+    private final int Row;
+    private final int Column;
 
     /**
      * A parameterized constructor for BoardPosition, accepts 2 integers
@@ -31,9 +31,11 @@ public class BoardPosition
      * 
      */
     
+    // Parameterized constructor for BoardPosition
     public BoardPosition(int aRow, int aColumn)
-    {
-        //parameterized constructor for BoardPosition
+    {   
+        this.Row = aRow;
+        this.Column = aColumn;
     }
 
     /**
@@ -49,7 +51,7 @@ public class BoardPosition
 
     public int getRow()
     {
-        //returns the row
+        return this.Row; //returns the row
     }
 
     /**
@@ -65,8 +67,10 @@ public class BoardPosition
 
     public int getColumn()
     {
-        //returns the column
+        return this.Column; //returns the column
     }
+
+    // LOOK AT THIS
 
     /**
      * Standard override for the equals method
@@ -84,10 +88,12 @@ public class BoardPosition
      *
      */
 
-    @Override
     public boolean equals(BoardPosition obj)
     {
-
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        BoardPosition that = (BoardPosition) obj;
+        return Row == that.Row && Column == that.Column;
     }
 
     /**
@@ -97,14 +103,12 @@ public class BoardPosition
      * 
      * @pre this != null
      * 
-     * #@post toString = "Row: " + this.Row + " Column: " + this.Column AND Column = #Column AND Row = #Row
      * @post toString =  this.Row + "," + this.Column AND Column = #Column AND Row = #Row
-     * 
      */
 
     @Override
     public String toString()
     {
-
+        return Row + "," + Column;
     }
 }

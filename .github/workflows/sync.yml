@@ -14,17 +14,10 @@ jobs:
 
       - name: Sync repository 1
         run: |
-          mkdir -p "CPSC2150/first assignment"
-          git clone https://$GITHUB_ACTOR:${{ secrets.GH_PAT }}@github.com/Clemson-CPSC2150-SummerFall24/hw0-getting-into-teams-define-isnan-x-false temp/repo1
-          cp -r temp/repo1/* "CPSC2150/first assignment/"
-          rm -rf temp/repo1
-
-      - name: Sync repository 2
-        run: |
           mkdir -p "CPSC2150/CPSC2150 Project"
           git clone https://$GITHUB_ACTOR:${{ secrets.GH_PAT }}@github.com/Clemson-CPSC2150-SummerFall24/project-1-connect4-define-isnan-x-false temp/repo2
-          cp -r temp/repo2/* "CPSC2150/Project 1/"
-          rm -rf temp/repo2
+          cp -r temp/repo1/* "CPSC2150/CPSC2150 Project/"
+          rm -rf temp/repo1
 
       # essentially the same as above for future assignments, but for a different repo, folder, and link
 

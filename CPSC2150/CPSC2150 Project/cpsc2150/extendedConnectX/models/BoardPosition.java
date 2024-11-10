@@ -23,8 +23,8 @@ public class BoardPosition
      * @param aRow the value of a row on the game board 
      * @param aColumn the value of a column on the game board
      * 
-     * @return getRow = aRow AND row = #aRow AND getColumn = aColumn AND column = #aColumn 
-     * 
+     * @return getRow = aRow AND row = #aRow AND getColumn = aColumn AND column = #aColumn
+     *
      * @pre aRow >= 0 AND aColumn >= 0
      * 
      * @post this.Row = aRow AND this.Column = aColumn
@@ -92,8 +92,7 @@ public class BoardPosition
     {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        BoardPosition that = (BoardPosition) obj;
-        return Row == that.Row && Column == that.Column;
+        return Row == obj.Row && Column == obj.Column;
     }
 
     /**

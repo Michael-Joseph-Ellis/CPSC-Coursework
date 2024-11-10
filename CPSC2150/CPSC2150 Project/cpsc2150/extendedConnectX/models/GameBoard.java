@@ -10,7 +10,7 @@ Cooper Taylor - Cooper-Taylor
 
 Adam Niemczura - AdamNiem
 
- */
+*/
 
 public class GameBoard extends AbsGameBoard
 {
@@ -26,12 +26,12 @@ public class GameBoard extends AbsGameBoard
 
     public GameBoard()
     {
-        board = new char[MAX_ROW][MAX_COLUMN];
+        board = new char[MAX_ROW][MAX_COL];
 
         // initialize the board with empty spots
         for (int r = 0; r < MAX_ROW; r++)
         {
-            for (int c = 0; c < MAX_COLUMN; c++)
+            for (int c = 0; c < MAX_COL; c++)
             {
                 board[r][c] = ' ';
             }
@@ -98,7 +98,6 @@ public class GameBoard extends AbsGameBoard
         return board[pos.getRow()][pos.getColumn()];
     }
 
-
     // LOOK AT THIS  
     
     /**
@@ -117,14 +116,14 @@ public class GameBoard extends AbsGameBoard
         StringBuilder boardString = new StringBuilder();
 
         // Add column headers
-        for (int i = 0; i < MAX_COLUMN; i++) {
+        for (int i = 0; i < MAX_COL; i++) {
             boardString.append("|").append(i);
         }
         boardString.append("|\n");
 
         // Add each row of the board from top to bottom
         for (int r = 0; r < MAX_ROW; r++) {
-            for (int c = 0; c < MAX_COLUMN; c++) {
+            for (int c = 0; c < MAX_COL; c++) {
                 boardString.append("|").append(board[r][c]);
             }
             boardString.append("|\n");

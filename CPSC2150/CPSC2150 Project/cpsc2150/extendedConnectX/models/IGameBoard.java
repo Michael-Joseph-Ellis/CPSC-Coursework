@@ -5,19 +5,19 @@ package cpsc2150.extendedConnectX.models;
  *  checkForWin, checkTie, checkHorizWin, checkDiagWin, whatsAtPos, and isPlayerAtPos.
  *  2-Dimensional grid starting at Index 0.
  *
- * @ initialization_ensures: board contains only ' ' characters
- *  and is MAX_ROW x MAX_COLUMN or smaller
+ * @initialization_ensures: board contains only ' ' characters
+ *  and is MAX_ROW x MAX_COL or smaller
  *
- * @ defines: self: the board
+ * @defines: self: the board
  *
- * @ constraints: None?
+ * @constraints: None?
  *
  */
 
 public interface IGameBoard {
     public static final int MAX_ROW = 9;
-    public static final int MAX_COLUMN = 7;
-    public static final int NUM_TO_WIN = 5;
+    public static final int MAX_COL = 7;
+    public static final int TOKENS_TO_WIN = 5;
 
     /**
      * A checker to see if a column has a free space, accepts 1 int param
@@ -88,7 +88,7 @@ public interface IGameBoard {
      */
     default boolean checkTie(){
         for (int r = 0; r < MAX_ROW; r++){
-            for (int c =0; c < MAX_COLUMN; c++){
+            for (int c =0; c < MAX_COL; c++){
                 if (whatsAtPos(new BoardPosition(r,c)) == ' ')
                     return false;
             }
@@ -113,27 +113,34 @@ public interface IGameBoard {
      */
 
     // Like checkTie, we can just use whatsAtPos so Secondary
-    default boolean checkHorizWin(BoardPosition pos, char p){
-        int rightBound = pos.getColumn() + NUM_TO_WIN / 2;
-        int leftBound = pos.getColumn() - NUM_TO_WIN / 2;
+    default boolean checkHorizWin(BoardPosition pos, char p) 
+    {
+        int count = 1; // start counting from current position
 
-        // Will fail if NUM_TO_WIN >= MAX_COLUMN
-        if (leftBound < 0) {
-            rightBound += leftBound;
-            leftBound = 0;
+        // check to the left of the current position
+        for (int col = pos.getColumn() - 1; col >= 0; col--) {
+            if (whatsAtPos(new BoardPosition(pos.getRow(), col)) == p) {
+                count++;
+                if (count >= TOKENS_TO_WIN) {
+                    return true;
+                }
+            } else {
+                break; // stop if we encounter a different token
+            }
         }
 
-        if (rightBound >= MAX_COLUMN){
-            leftBound -= (rightBound - MAX_COLUMN - 1);
-            rightBound = MAX_COLUMN - 1;
+        // same as above but for the right of current pos 
+        for (int col = pos.getColumn() + 1; col < MAX_COL; col++) {
+            if (whatsAtPos(new BoardPosition(pos.getRow(), col)) == p) {
+                count++;
+                if (count >= TOKENS_TO_WIN) {
+                    return true;
+                }
+            } else {
+                break;
+            }
         }
-
-        for (int i = leftBound; i <= rightBound; i++) {
-            if (whatsAtPos(new BoardPosition(pos.getRow(), i)) != p)
-                return false;
-        }
-
-        return true;
+        return false;
     }
 
     /**
@@ -152,17 +159,28 @@ public interface IGameBoard {
      *
      */
     // Secondary (same reasoning)
-    default boolean checkVertWin(BoardPosition pos, char p){
+    default boolean checkVertWin(BoardPosition pos, char p) {
+        int count = 1; // start counting from the current position
 
-        // This should be run on the last token dropped, meaning we don't have to test 'up'
-        if (pos.getRow() < MAX_ROW - NUM_TO_WIN) {
-            for (int i = 0; i < pos.getRow(); i++){
-                if (whatsAtPos(new BoardPosition(pos.getRow() + i, pos.getColumn())) != p)
-                    return false;
+        // check down
+        for (int i = 1; i < TOKENS_TO_WIN; i++) {
+            int newRow = pos.getRow() + i;
+            if (newRow >= MAX_ROW || whatsAtPos(new BoardPosition(newRow, pos.getColumn())) != p) {
+                break;
             }
+            count++;
         }
 
-        return false;
+        // check up
+        for (int i = 1; i < TOKENS_TO_WIN; i++) {
+            int newRow = pos.getRow() - i;
+            if (newRow < 0 || whatsAtPos(new BoardPosition(newRow, pos.getColumn())) != p) {
+                break;
+            }
+            count++;
+        }
+
+        return count >= TOKENS_TO_WIN;
     }
 
     /**
@@ -183,7 +201,77 @@ public interface IGameBoard {
      */
     // Secondary (same reasoning)
     default boolean checkDiagWin(BoardPosition pos, char p){
-        return true;
+        int row = pos.getRow();
+        int col = pos.getColumn();
+        int count = 1; // Start with the token at (row, col)
+
+        // Check the main diagonal (\)
+        // Count upwards-left (-1, -1)
+        int tempRow = row - 1;
+        int tempCol = col - 1;
+
+        while (tempRow >= 0 && tempCol >= 0) {
+            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p)
+                count++;
+            else
+                break;
+
+            tempRow--;
+            tempCol--;
+        }
+
+        // Count downwards-right (+1, +1)
+        tempRow = row + 1;
+        tempCol = col + 1;
+
+        while (tempRow < MAX_ROW && tempCol < MAX_COL) {
+            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p)
+                count++;
+            else
+                break;
+
+            tempRow++;
+            tempCol++;
+        }
+
+        // If we found a win on the main diagonal, return true
+        if (count >= TOKENS_TO_WIN) {
+            return true;
+        }
+
+        // Reset count for the anti-diagonal (/)
+        count = 1;
+
+        // Check the anti-diagonal (/)
+        // Count upwards-right (-1, +1)
+        tempRow = row - 1;
+        tempCol = col + 1;
+
+        while (tempRow >= 0 && tempCol < MAX_COL) {
+            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p)
+                count++;
+            else
+                break;
+
+            tempRow--;
+            tempCol++;
+        }
+
+        // Count downwards-left (+1, -1)
+        tempRow = row + 1;
+        tempCol = col - 1;
+        while (tempRow < MAX_ROW && tempCol >= 0) {
+            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p)
+                count++;
+            else
+                break;
+
+            tempRow++;
+            tempCol--;
+        }
+
+        // Return true if there is a win on the anti-diagonal
+        return count >= TOKENS_TO_WIN;
     }
 
     // Primary - needs access to board

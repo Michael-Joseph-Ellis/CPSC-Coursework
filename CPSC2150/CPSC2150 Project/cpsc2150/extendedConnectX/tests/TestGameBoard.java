@@ -2,7 +2,7 @@ package cpsc2150.extendedConnectX.tests;
 
 import cpsc2150.extendedConnectX.models.*;
 
-import static cpsc2150.extendedConnectX.models.GameBoard.MAX_COLUMN;
+import static cpsc2150.extendedConnectX.models.GameBoard.MAX_COL;
 import static cpsc2150.extendedConnectX.models.GameBoard.MAX_ROW;
 import static org.junit.Assert.*;
 
@@ -83,8 +83,39 @@ public class TestGameBoard {
             }
         }
 
-        assertEquals(true, gb.checkIfFree(0));
+        assertTrue(gb.checkIfFree(0));
     }
+
+    @Test
+    public void TEMP_RE_TEST() {
+        IGameBoard gb = makeBoard();
+
+        char[][] initialBoard = {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', 'X', ' ', ' '},
+                {' ', ' ', ' ', 'X', 'O', ' ', ' '},
+                {' ', ' ', 'X', 'X', 'X', ' ', ' '},
+                {' ', 'X', 'X', 'O', 'O', ' ', ' '},
+                {'X', 'O', 'O', 'O', 'O', ' ', ' '},
+        };
+
+        // Loop from the bottom row to the top row to set up the board
+        for (int row = initialBoard.length - 1; row >= 0; row--) {
+            for (int col = 0; col < initialBoard[row].length; col++) {
+                char token = initialBoard[row][col];
+                if (token != ' ') {
+                    gb.dropToken(token, col);
+                }
+            }
+        }
+
+        BoardPosition pos = new BoardPosition(4, 4);
+        assertTrue(gb.checkDiagWin(pos, 'X'));
+    }
+
 
     @Test
     public void Test_checkIfFree_col0_notFree() {
@@ -112,7 +143,7 @@ public class TestGameBoard {
             }
         }
 
-        assertEquals(false, gb.checkIfFree(0));
+        assertFalse(gb.checkIfFree(0));
 
     }
 
@@ -142,7 +173,7 @@ public class TestGameBoard {
             }
         }
 
-        assertEquals(true, gb.checkIfFree(6));
+        assertTrue(gb.checkIfFree(6));
 
     }
 
@@ -173,7 +204,7 @@ public class TestGameBoard {
             }
         }
 
-        assertEquals(false, gb.checkIfFree(6));
+        assertFalse(gb.checkIfFree(6));
 
     }
 
@@ -182,7 +213,7 @@ public class TestGameBoard {
     public void Test_checkIfFree_empty_col3_free() {
         IGameBoard gb = makeBoard();
 
-        assertEquals(true, gb.checkIfFree(3));
+        assertTrue(gb.checkIfFree(3));
     }
 
     /* The following tests are for the checkHorizontalWin method
@@ -226,7 +257,7 @@ public class TestGameBoard {
 
         BoardPosition boardPos = new BoardPosition(8, 0);
 
-        assertEquals(false, gb.checkHorizWin(boardPos, 'O'));
+        assertFalse(gb.checkHorizWin(boardPos, 'O'));
     }
 
     @Test
@@ -260,7 +291,7 @@ public class TestGameBoard {
 
         BoardPosition boardPos = new BoardPosition(8, 6);
 
-        assertEquals(true, gb.checkHorizWin(boardPos, 'X'));
+        assertTrue(gb.checkHorizWin(boardPos, 'X'));
     }
 
     @Test
@@ -294,7 +325,7 @@ public class TestGameBoard {
 
         BoardPosition boardPos = new BoardPosition(5, 6);
 
-        assertEquals(true, gb.checkHorizWin(boardPos, 'O'));
+        assertTrue(gb.checkHorizWin(boardPos, 'O'));
     }
 
 
@@ -329,7 +360,7 @@ public class TestGameBoard {
 
         BoardPosition boardPos = new BoardPosition(4, 6);
 
-        assertEquals(false, gb.checkHorizWin(boardPos, 'X'));
+        assertFalse(gb.checkHorizWin(boardPos, 'X'));
     }
 
 
@@ -357,7 +388,7 @@ public class TestGameBoard {
 
         BoardPosition pos = new BoardPosition(4, 2);
 
-        assertEquals(true, gb.checkVertWin(pos, 'X'));
+        assertTrue(gb.checkVertWin(pos, 'X'));
 
         /* visual representation of the board
         char[][] expectedBoard = {
@@ -384,7 +415,7 @@ public class TestGameBoard {
         
         BoardPosition pos = new BoardPosition(3, 1);
 
-        assertEquals(false, gb.checkVertWin(pos, 'O'));
+        assertFalse(gb.checkVertWin(pos, 'O'));
         
         /* visual representation of the board
         char[][] expectedBoard = {
@@ -420,7 +451,7 @@ public class TestGameBoard {
 
         BoardPosition pos = new BoardPosition(5, 0);
 
-        assertEquals(false, gb.checkVertWin(pos, 'X'));
+        assertFalse(gb.checkVertWin(pos, 'X'));
 
         /* visual representation of the board
          char[][] expectedBoard = {
@@ -473,7 +504,7 @@ public class TestGameBoard {
 
         BoardPosition pos = new BoardPosition(2,2);
 
-        assertEquals(true, gb.checkDiagWin(pos, 'X'));
+        assertTrue(gb.checkDiagWin(pos, 'X'));
 
         /* visual representation of the board
          char[][] expectedBoard = {
@@ -512,7 +543,7 @@ public class TestGameBoard {
 
         BoardPosition pos = new BoardPosition(0,0);
 
-        assertEquals(true, gb.checkDiagWin(pos, 'O'));
+        assertTrue(gb.checkDiagWin(pos, 'O'));
 
         /* visual representation of the board
         char[][] expectedBoard = {
@@ -549,7 +580,7 @@ public class TestGameBoard {
         
         BoardPosition pos = new BoardPosition(4,0);
 
-        assertEquals(true, gb.checkDiagWin(pos, 'X'));
+        assertTrue(gb.checkDiagWin(pos, 'X'));
 
         /* visual representation of the board  
          char[][] expectedBoard = {
@@ -570,7 +601,7 @@ public class TestGameBoard {
     public void test_checkDiagWin_PlayerO_ValidDiagWin_pos1_1() {
         IGameBoard gb = makeBoard();
 
-        for (int i = 0; i <= 2; i++) {
+        for (int i = 0; i < 2; i++) {
             for (int j = 0; j <= 4; j++) {
                 gb.dropToken('X', (j + 1));
             }
@@ -588,7 +619,7 @@ public class TestGameBoard {
 
         BoardPosition pos = new BoardPosition(1,1);
 
-        assertEquals(true, gb.checkDiagWin(pos, 'O'));
+        assertTrue(gb.checkDiagWin(pos, 'O'));
 
         /*
          char[][] expectedBoard = {
@@ -628,7 +659,7 @@ public class TestGameBoard {
 
         BoardPosition pos = new BoardPosition(4,2);
 
-        assertEquals(true, gb.checkDiagWin(pos, 'X'));
+        assertTrue(gb.checkDiagWin(pos, 'X'));
 
         /* visual representation of the board
          char[][] expectedBoard = {
@@ -661,7 +692,7 @@ public class TestGameBoard {
 
         BoardPosition pos = new BoardPosition(8,0);
 
-        assertEquals(true, gb.checkDiagWin(pos, 'O'));
+        assertTrue(gb.checkDiagWin(pos, 'O'));
 
         /*
          char[][] expectedBoard = {
@@ -708,7 +739,7 @@ public class TestGameBoard {
 
         BoardPosition pos = new BoardPosition(3,3);
 
-        assertEquals(false, gb.checkDiagWin(pos, 'X'));
+        assertFalse(gb.checkDiagWin(pos, 'X'));
 
         /* visual representation of the board
          char[][] expectedBoard = {
@@ -753,7 +784,7 @@ public class TestGameBoard {
         };
         */
         IGameBoard gb = makeBoard();
-        assertEquals(false, gb.checkTie());
+        assertFalse(gb.checkTie());
     }
 
     @Test
@@ -784,7 +815,7 @@ public class TestGameBoard {
             }
         }
 
-        assertEquals(true, gb.checkTie());
+        assertTrue(gb.checkTie());
     }
 
     @Test
@@ -812,7 +843,7 @@ public class TestGameBoard {
                 }
             }
         }
-        assertEquals(false, gb.checkTie());
+        assertFalse(gb.checkTie());
     }
 
     @Test
@@ -840,7 +871,7 @@ public class TestGameBoard {
                 }
             }
         }
-        assertEquals(false, gb.checkTie());
+        assertFalse(gb.checkTie());
     }
 
     /*
@@ -1023,7 +1054,7 @@ public class TestGameBoard {
 
         BoardPosition bp = new BoardPosition(8, 0);
 
-        assertEquals(gb.isPlayerAtPos(bp, 'O'), false);
+        assertFalse(gb.isPlayerAtPos(bp, 'O'));
     }
 
     @Test
@@ -1065,7 +1096,7 @@ public class TestGameBoard {
 
         BoardPosition bp = new BoardPosition(1, 2);
 
-        assertEquals(gb.isPlayerAtPos(bp, 'X'), true);
+        assertTrue(gb.isPlayerAtPos(bp, 'X'));
     }
 
     @Test
@@ -1101,7 +1132,7 @@ public class TestGameBoard {
 
         BoardPosition bp = new BoardPosition(0, 0);
 
-        assertEquals(gb.isPlayerAtPos(bp, 'X'), false);
+        assertFalse(gb.isPlayerAtPos(bp, 'X'));
     }
 
     @Test
@@ -1126,7 +1157,7 @@ public class TestGameBoard {
 
         BoardPosition bp = new BoardPosition(8, 6);
 
-        assertEquals(gb.isPlayerAtPos(bp, 'O'), false);
+        assertFalse(gb.isPlayerAtPos(bp, 'O'));
     }
 
     @Test
@@ -1157,7 +1188,7 @@ public class TestGameBoard {
 
         BoardPosition bp = new BoardPosition(2, 3);
 
-        assertEquals(gb.isPlayerAtPos(bp, 'X'), false);
+        assertFalse(gb.isPlayerAtPos(bp, 'X'));
     }
 
     /* The following tests are for the dropToken method.
@@ -1405,14 +1436,14 @@ public class TestGameBoard {
     private static String expectedBoardToString(char[][] gb) {
         StringBuilder board = new StringBuilder();
 
-        for (int i = 0; i < (MAX_COLUMN); i++) {
+        for (int i = 0; i < (MAX_COL); i++) {
             board.append("|").append(i);
         }
 
         board.append("|\n");
 
         for (int i = 0; i < (MAX_ROW); i++) {
-            for (int j = 0; j < MAX_COLUMN; j++) {
+            for (int j = 0; j < MAX_COL; j++) {
                 board.append("|").append(gb[i][j]);
             }
             board.append("|\n");

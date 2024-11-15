@@ -3,7 +3,7 @@ package cpsc2150.extendedConnectX.models;
 /**
  *  iGameBoard interface for GameBoard operations checkIfFree, dropToken,
  *  checkForWin, checkTie, checkHorizWin, checkDiagWin, whatsAtPos, and isPlayerAtPos.
- *  2-Dimensional grid starting at Index 0.
+ *  A grid starting at Index 0.
  *
  * @initialization_ensures: board contains only ' ' characters
  *  and is MAX_ROW x MAX_COL or smaller
@@ -28,12 +28,24 @@ public interface IGameBoard {
      *
      * @pre 0 <= c < [number of columns]
      *
-     * @post checkIfFree = true OR checkIfFree = false AND self = #self
-     *
+     * @post checkIfFree = true if column c contains at least one ' ' character;
+     *       checkIfFree = false if all positions in column c are filled with tokens.
+     *       AND self = #self
      */
     default boolean checkIfFree(int c){
         return whatsAtPos(new BoardPosition(0,c)) == ' ';
     }
+
+    /**
+     * Places the token in the lowest available row in column c.
+     *
+     * @param p the character representing the player's token
+     * @param c the index of the column on the game board
+     *
+     * @pre 0 <= c < MAX_COL AND checkIfFree(c) = true AND p is not null
+     *
+     * @post self = #self with token p added to the lowest available row in column c
+     */
 
     // Primary - needs to access board so change can be made
     void dropToken(char p, int c);
@@ -47,11 +59,10 @@ public interface IGameBoard {
      *
      * @pre 0 <= c < [number of columns] AND [the last move was made in column c]
      *
-     * //@post checkForWin = true OR checkForWin = false AND board = #board
-     * @post returns true if last token placed completes max number of consecutive same markers to win either Vertically, Horizontally, or Diagonally
-     * else it returns false if these conditions are not met
-     * AND board = #board
-     *
+     * @post checkForWin = true if the last token in column c forms a consecutive sequence
+     *       of TOKENS_TO_WIN or more in any direction (vertical, horizontal, or diagonal);
+     *       checkForWin = false otherwise.
+     *       AND self = #self
      */
     // Secondary, just call other check win methods
     default boolean checkForWin(int c){
@@ -83,8 +94,9 @@ public interface IGameBoard {
      *
      * @pre None
      *
-     * //@post checkTie = true OR checkTie = false board = #board
-     * @post returns true if all cells in the board are filled with tokens, else returns false. board = #board
+     * @post checkTie = true if all cells in self are filled with tokens and no player has won;
+     *       checkTie = false if there are any empty spaces or if a player has achieved a win.
+     *       AND self = #self
      */
     default boolean checkTie(){
         for (int r = 0; r < MAX_ROW; r++){
@@ -107,9 +119,9 @@ public interface IGameBoard {
      *
      * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
      *
-     * //@post checkHorizWin = true OR checkHorizWin = false AND board = #board
-     * @post checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in
-     * a row horizontally of the same markers. Returns true if it does, otherwise false. board = #board
+     * @post checkHorizWin = true if there is a sequence of TOKENS_TO_WIN consecutive tokens
+     *       in the same row as pos for player p; checkHorizWin = false otherwise.
+     *       AND self = #self
      */
 
     // Like checkTie, we can just use whatsAtPos so Secondary
@@ -153,10 +165,9 @@ public interface IGameBoard {
      *
      * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
      *
-     * //@post checkVerWin = true OR checkVertWin = false AND board = #board
-     * @post checks to see if the last token placed (which was placed in position pos by player p) resulted in 5 in a row
-     * vertically of the same markers. Returns true if it does, otherwise false. board = #board
-     *
+     * @post checkVertWin = true if there is a sequence of TOKENS_TO_WIN consecutive tokens
+     *       in the same column as pos for player p; checkVertWin = false otherwise.
+     *       AND self = #self
      */
     // Secondary (same reasoning)
     default boolean checkVertWin(BoardPosition pos, char p) {
@@ -193,11 +204,9 @@ public interface IGameBoard {
      *
      * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
      *
-     * //@post checkDiagWin = true OR checkDiagWin = false AND board = #board
-     * @post checkDiagWin = Returns true if the last token inserted at position pos on the board by player p
-     * results in a diagonal win for that player. Tokens diagonal to the token at pos must be the required length to
-     * count as a win and all tokens in diagonal must be player p's tokens. Else returns false.
-     * Note: there are two diagonals to check
+     * @post checkDiagWin = true if there is a sequence of TOKENS_TO_WIN consecutive tokens
+     *       along either diagonal direction for player p; checkDiagWin = false otherwise.
+     *       AND self = #self
      */
     // Secondary (same reasoning)
     default boolean checkDiagWin(BoardPosition pos, char p){
@@ -274,6 +283,19 @@ public interface IGameBoard {
         return count >= TOKENS_TO_WIN;
     }
 
+    /**
+     * Retrieves the character at a specific position on the board.
+     *
+     * @param pos a position on the game board
+     *
+     * @return the character ('X', 'O', or ' ') present at the specified position.
+     *
+     * @pre 0 <= pos.getRow() < MAX_ROW AND 0 <= pos.getColumn() < MAX_COL
+     *
+     * @post returns the character at the specified position (either 'X', 'O', or ' ')
+     *       AND self = #self
+     */
+
     // Primary - needs access to board
     char whatsAtPos(BoardPosition pos);
 
@@ -287,9 +309,9 @@ public interface IGameBoard {
      *
      * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND player is some real player
      *
-     * @post boolean evaluates to true if the player in question is at the position specified on the board
-     * and false if the player in question is not at the specified board position
-     *
+     * @post isPlayerAtPos = true if self at pos contains the token of player;
+     *       isPlayerAtPos = false if the token at pos does not match player.
+     *       AND self = #self
      */
     // Secondary - only needs whatsAtPos
     default boolean isPlayerAtPos(BoardPosition pos, char player){

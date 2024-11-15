@@ -1,7 +1,6 @@
 package cpsc2150.extendedConnectX.views;
 import cpsc2150.extendedConnectX.models.GameBoard;
 import cpsc2150.extendedConnectX.models.IGameBoard;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,11 +17,19 @@ Adam Niemczura - AdamNiem
 
 */
 
+/**
+ * The `GameScreen` class is responsible for handling the user interface
+ * and game loop for a Connect X game.
+ *
+ * It provides methods for printing the game board, checking for game end conditions,
+ * getting user input, and prompting the player for their move.
+ */
+
 public class GameScreen {
 
     /**
      * Prints out the string representation of the game board to the terminal
-     * 
+     *
      * @param gameBoard game board object
      *
      * @pre gameBoard != NULL
@@ -90,9 +97,9 @@ public class GameScreen {
      */
     public static String getInput() throws IOException {
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-            return reader.readLine();
+        return reader.readLine();
     }
 
     /**
@@ -144,7 +151,7 @@ public class GameScreen {
         char currentPlayer = 'X';
         int columnSelected; //Tracks the column where token will be dropped per turn
 
-        boolean endGame = false;
+        boolean endGame;
 
         //Initialize game board
         GameBoard gameBoard = new GameBoard();

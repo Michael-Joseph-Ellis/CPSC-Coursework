@@ -2,6 +2,7 @@ package cpsc2150.extendedConnectX.models;
 
 public abstract class AbsGameBoard implements IGameBoard
 {
+    private int dimensions;
 
     /**
      * Provides a string representation of the current game board.
@@ -13,21 +14,19 @@ public abstract class AbsGameBoard implements IGameBoard
      * @post The returned string representation retains the dimensions and values of the game board.
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder boardString = new StringBuilder();
 
-        // Add column headers
-        for (int i = 0; i < MAX_COL; i++) {
-            boardString.append("|").append(i);
+        // Add column headers dynamically
+        for (int i = 0; i < getColumns(); i++) {
+            boardString.append(String.format("|%2d", i));
         }
         boardString.append("|\n");
 
         // Add each row of the board from top to bottom
-        for (int r = 0; r < MAX_ROW; r++) {
-            for (int c = 0; c < MAX_COL; c++) {
-                char[][] board = new char[MAX_ROW][MAX_COL];
-                boardString.append("|").append(board[r][c]);
+        for (int r = 0; r < getRows(); r++) {
+            for (int c = 0; c < getColumns(); c++) {
+                boardString.append(String.format("| %c", whatsAtPos(new BoardPosition(r, c))));
             }
             boardString.append("|\n");
         }

@@ -4,6 +4,9 @@ import cpsc2150.extendedConnectX.models.*;
 
 import static cpsc2150.extendedConnectX.models.GameBoard.MAX_COL;
 import static cpsc2150.extendedConnectX.models.GameBoard.MAX_ROW;
+import static cpsc2150.extendedConnectX.models.IGameBoard.MAX_COL;
+import static cpsc2150.extendedConnectX.models.IGameBoard.MAX_ROW;
+import static cpsc2150.extendedConnectX.models.IGameBoard.TOKENS_TO_WIN;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -1451,8 +1454,8 @@ public class TestGameBoard {
         return board.toString();
     }
 
-    public IGameBoard makeBoard()
+    public IGameBoard makeBoard() 
     {
-        return new GameBoard();
+        return new GameBoard(MAX_ROW, MAX_COL, TOKENS_TO_WIN); // Adjust the `numToWin` parameter as necessary
     }
 }

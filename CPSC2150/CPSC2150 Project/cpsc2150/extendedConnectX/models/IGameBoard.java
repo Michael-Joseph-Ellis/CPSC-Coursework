@@ -44,7 +44,9 @@ public interface IGameBoard {
      *
      * @pre 0 <= c < MAX_COL AND checkIfFree(c) = true AND p is not null
      *
-     * @post self = #self with token p added to the lowest available row in column c
+     * @post The token `p` is added to the lowest available row in column `c` on the game board.
+     *       AND the state of the game board is updated to reflect this change.
+     *       AND self = #self with the updated board.
      */
 
     // Primary - needs to access board so change can be made
@@ -57,31 +59,35 @@ public interface IGameBoard {
      *
      * @return true IF [last token in c results in a win] ELSE false
      *
-     * @pre 0 <= c < [number of columns] AND [the last move was made in column c]
+     * @pre 0 <= c < getColumns() AND [the last move was made in column c]
      *
-     * @post checkForWin = true if the last token in column c forms a consecutive sequence
-     *       of TOKENS_TO_WIN or more in any direction (vertical, horizontal, or diagonal);
+     * @post checkForWin = true if the last token in column c forms a winning sequence
+     *       in any direction (horizontal, vertical, or diagonal);
      *       checkForWin = false otherwise.
      *       AND self = #self
      */
     // Secondary, just call other check win methods
-    default boolean checkForWin(int c){
-        int row = 0;
-        char player = whatsAtPos(new BoardPosition(row, c));
+    default boolean checkForWin(int c) {
+        // Ensure the column index is valid
+        assert c >= 0 && c < getColumns() : "Invalid column index";
 
-        while (player == ' ') {
+        int row = 0;
+
+        // Find the first occupied row in the given column
+        while (row < getRows() && whatsAtPos(new BoardPosition(row, c)) == ' ') {
             row++;
-            player = whatsAtPos(new BoardPosition(row, c));
         }
 
+        // If no token was found in the column, no win is possible
+        if (row >= getRows()) {
+            return false;
+        }
+
+        char player = whatsAtPos(new BoardPosition(row, c));
         BoardPosition currentPos = new BoardPosition(row, c);
 
-        if (checkHorizWin(currentPos, player))
-            return true;
-        if (checkVertWin(currentPos, player))
-            return true;
-
-        return checkDiagWin(currentPos, player);
+        // Check for win conditions
+        return checkHorizWin(currentPos, player) || checkVertWin(currentPos, player) || checkDiagWin(currentPos, player);
     }
 
     // As long as we have MAX values, we can iterate and ensure all positions are filled
@@ -105,7 +111,6 @@ public interface IGameBoard {
                     return false;
             }
         }
-
         return true;
     }
 
@@ -115,37 +120,41 @@ public interface IGameBoard {
      * @param pos the position where the last token was placed
      * @param p player who placed the last token
      *
-     * @return true IF [last token results in a horizontal win] ELSE false
+     * @return true if the last token placed results in a horizontal win (a sequence of tokens matching `p`
+     *         with length equal to or greater than `getNumToWin()`) in the same row as `pos`.
+     *         Returns false otherwise.
      *
-     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
+     * @pre pos != null
+     *      AND 0 <= pos.getRow() < getRows()
+     *      AND 0 <= pos.getColumn() < getColumns()
+     *      AND p is not null
      *
-     * @post checkHorizWin = true if there is a sequence of TOKENS_TO_WIN consecutive tokens
-     *       in the same row as pos for player p; checkHorizWin = false otherwise.
-     *       AND self = #self
+     * @post checkHorizWin = true if there is a sequence of `getNumToWin()` or more consecutive tokens
+     *       matching `p` in the same row as `pos`; otherwise, checkHorizWin = false.
+     *       AND the game board remains unchanged (self = #self).
      */
 
     // Like checkTie, we can just use whatsAtPos so Secondary
-    default boolean checkHorizWin(BoardPosition pos, char p) 
-    {
-        int count = 1; // start counting from current position
+    default boolean checkHorizWin(BoardPosition pos, char p) {
+        int count = 1;
 
-        // check to the left of the current position
+        // Check left
         for (int col = pos.getColumn() - 1; col >= 0; col--) {
             if (whatsAtPos(new BoardPosition(pos.getRow(), col)) == p) {
                 count++;
-                if (count >= TOKENS_TO_WIN) {
+                if (count >= getNumToWin()) { // Use dynamic value from getNumToWin()
                     return true;
                 }
             } else {
-                break; // stop if we encounter a different token
+                break;
             }
         }
 
-        // same as above but for the right of current pos 
-        for (int col = pos.getColumn() + 1; col < MAX_COL; col++) {
+        // Check right
+        for (int col = pos.getColumn() + 1; col < getColumns(); col++) {
             if (whatsAtPos(new BoardPosition(pos.getRow(), col)) == p) {
                 count++;
-                if (count >= TOKENS_TO_WIN) {
+                if (count >= getNumToWin()) {
                     return true;
                 }
             } else {
@@ -161,29 +170,34 @@ public interface IGameBoard {
      * @param pos the position where the last token was placed
      * @param p the player who placed the last token
      *
-     * @return true IF [last token results in a vertical win] ELSE false
+     * @return true if the last token placed results in a vertical win (a sequence of tokens matching `p`
+     *         with length equal to or greater than `getNumToWin()`) in the same column as `pos`.
+     *         Returns false otherwise.
      *
-     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
+     * @pre pos != null
+     *      AND 0 <= pos.getRow() < getRows()
+     *      AND 0 <= pos.getColumn() < getColumns()
+     *      AND p is not null
      *
-     * @post checkVertWin = true if there is a sequence of TOKENS_TO_WIN consecutive tokens
-     *       in the same column as pos for player p; checkVertWin = false otherwise.
-     *       AND self = #self
+     * @post checkVertWin = true if there is a sequence of `getNumToWin()` or more consecutive tokens
+     *       matching `p` in the same column as `pos`; otherwise, checkVertWin = false.
+     *       AND the game board remains unchanged (self = #self).
      */
     // Secondary (same reasoning)
     default boolean checkVertWin(BoardPosition pos, char p) {
-        int count = 1; // start counting from the current position
+        int count = 1;
 
-        // check down
-        for (int i = 1; i < TOKENS_TO_WIN; i++) {
+        // Check down
+        for (int i = 1; i < getNumToWin(); i++) {
             int newRow = pos.getRow() + i;
-            if (newRow >= MAX_ROW || whatsAtPos(new BoardPosition(newRow, pos.getColumn())) != p) {
+            if (newRow >= getRows() || whatsAtPos(new BoardPosition(newRow, pos.getColumn())) != p) {
                 break;
             }
             count++;
         }
 
-        // check up
-        for (int i = 1; i < TOKENS_TO_WIN; i++) {
+        // Check up
+        for (int i = 1; i < getNumToWin(); i++) {
             int newRow = pos.getRow() - i;
             if (newRow < 0 || whatsAtPos(new BoardPosition(newRow, pos.getColumn())) != p) {
                 break;
@@ -191,7 +205,7 @@ public interface IGameBoard {
             count++;
         }
 
-        return count >= TOKENS_TO_WIN;
+        return count >= getNumToWin();
     }
 
     /**
@@ -200,16 +214,21 @@ public interface IGameBoard {
      * @param pos the position where the last token was placed
      * @param p the player who placed the last token
      *
-     * @return true IF [the player has achieved a diagonal win (5 in a row)] ELSE false
+     * @return true if the last token placed results in a diagonal win (a sequence of tokens matching `p`
+     *         with length equal to or greater than `getNumToWin()`) along either diagonal direction (\ or /).
+     *         Returns false otherwise.
      *
-     * @pre 0 <= pos.getRow() < [number of rows] AND 0 <= pos.getColumn() < [number of columns] AND p != null
+     * @pre pos != null
+     *      AND 0 <= pos.getRow() < getRows()
+     *      AND 0 <= pos.getColumn() < getColumns()
+     *      AND p is not null
      *
-     * @post checkDiagWin = true if there is a sequence of TOKENS_TO_WIN consecutive tokens
-     *       along either diagonal direction for player p; checkDiagWin = false otherwise.
-     *       AND self = #self
+     * @post checkDiagWin = true if there is a sequence of `getNumToWin()` or more consecutive tokens
+     *       matching `p` along either diagonal direction (\ or /); otherwise, checkDiagWin = false.
+     *       AND the game board remains unchanged (self = #self).
      */
     // Secondary (same reasoning)
-    default boolean checkDiagWin(BoardPosition pos, char p){
+    default boolean checkDiagWin(BoardPosition pos, char p) {
         int row = pos.getRow();
         int col = pos.getColumn();
         int count = 1; // Start with the token at (row, col)
@@ -219,12 +238,16 @@ public interface IGameBoard {
         int tempRow = row - 1;
         int tempCol = col - 1;
 
-        while (tempRow >= 0 && tempCol >= 0) {
-            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p)
-                count++;
-            else
-                break;
 
+        while (tempRow >= 0 && tempCol >= 0) {
+            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p) {
+                count++;
+                if (count >= getNumToWin()) {
+                    return true;
+                }
+            } else {
+                break;
+            }
             tempRow--;
             tempCol--;
         }
@@ -233,19 +256,17 @@ public interface IGameBoard {
         tempRow = row + 1;
         tempCol = col + 1;
 
-        while (tempRow < MAX_ROW && tempCol < MAX_COL) {
-            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p)
+        while (tempRow < getRows() && tempCol < getColumns()) {
+            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p) {
                 count++;
-            else
+                if (count >= getNumToWin()) {
+                    return true;
+                }
+            } else {
                 break;
-
+            }
             tempRow++;
             tempCol++;
-        }
-
-        // If we found a win on the main diagonal, return true
-        if (count >= TOKENS_TO_WIN) {
-            return true;
         }
 
         // Reset count for the anti-diagonal (/)
@@ -256,12 +277,15 @@ public interface IGameBoard {
         tempRow = row - 1;
         tempCol = col + 1;
 
-        while (tempRow >= 0 && tempCol < MAX_COL) {
-            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p)
+        while (tempRow >= 0 && tempCol < getColumns()) {
+            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p) {
                 count++;
-            else
+                if (count >= getNumToWin()) {
+                    return true;
+                }
+            } else {
                 break;
-
+            }
             tempRow--;
             tempCol++;
         }
@@ -269,18 +293,22 @@ public interface IGameBoard {
         // Count downwards-left (+1, -1)
         tempRow = row + 1;
         tempCol = col - 1;
-        while (tempRow < MAX_ROW && tempCol >= 0) {
-            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p)
-                count++;
-            else
-                break;
 
+        while (tempRow < getRows() && tempCol >= 0) {
+            if (whatsAtPos(new BoardPosition(tempRow, tempCol)) == p) {
+                count++;
+                if (count >= getNumToWin()) {
+                    return true;
+                }
+            } else {
+                break;
+            }
             tempRow++;
             tempCol--;
         }
 
-        // Return true if there is a win on the anti-diagonal
-        return count >= TOKENS_TO_WIN;
+        // Return false if no win is found on either diagonal
+        return false;
     }
 
     /**
@@ -317,4 +345,41 @@ public interface IGameBoard {
     default boolean isPlayerAtPos(BoardPosition pos, char player){
         return whatsAtPos(pos) == player;
     }
+
+    /**
+     * Returns the number of rows on the game board.
+     *
+     * @return the number of rows on the game board
+     *
+     * @pre None
+     *
+     * @post getRows = [the total number of rows specified for the game board during initialization]
+     *       AND self = #self
+     */
+    // Primary - needs to access board so change can be made
+    int getRows();
+
+    /**
+     * Returns the number of columns on the game board.
+     *
+     * @return the number of columns on the game board
+     *
+     * @pre None
+     *
+     * @post getColumns = [the total number of columns specified for the game board during initialization]
+     *       AND self = #self
+     */
+    // Primary - needs to access board so change can be made
+    int getColumns();
+
+    /**
+     * Returns the number of tokens required in a row to win the game.
+     *
+     * @return The number of tokens needed to win the game.
+     *
+     * @pre None
+     * @post getNumToWin = [the required number of tokens to win]
+     */
+    // Primary - needs to access board so change can be made
+    int getNumToWin();
 }

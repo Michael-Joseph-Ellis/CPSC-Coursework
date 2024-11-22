@@ -25,28 +25,43 @@ Adam Niemczura - AdamNiem
 public class GameBoard extends AbsGameBoard
 {
     private final char[][] board;
+    private int rows;
+    private int columns;
+    private int numToWin;
 
     /**
-     * A constructor for GameBoard. 
-     * 
-     * @pre None
-     * 
-     * @post A new GameBoard is initialized with empty spots.
+     * Constructor for the GameBoard class.
+     * It initializes a game board with the specified rows, columns, and tokens needed to win.
+     *
+     * @param rows: the number of rows for the game board
+     * @param columns: the number of columns for the game board
+     * @param numToWin: the number of tokens needed to win the game
+     *
+     * @pre 3 <= rows <= 100 AND 3 <= columns <= 100 AND 3 <= numToWin <= 25 AND numToWin <= rows AND numToWin <= columns
+     * @post A new game board of size rows x columns is initialized with all empty spaces (' ').
+     *       The winning condition is set to numToWin.
      */
 
-    public GameBoard()
-    {
-        board = new char[MAX_ROW][MAX_COL];
-
-        // initialize the board with empty spots
-        for (int r = 0; r < MAX_ROW; r++)
-        {
-            for (int c = 0; c < MAX_COL; c++)
-            {
-                board[r][c] = ' ';
-            }
+    public GameBoard(int rows, int columns, int numToWin) {
+        if (!(rows >= 3 && rows <= 100) ||
+                !(columns >= 3 && columns <= 100) ||
+                !(numToWin >= 3 && numToWin <= 25) ||
+                numToWin > rows || numToWin > columns) {
+            throw new IllegalArgumentException("Invalid board dimensions or winning conditions.");
         }
-    }
+
+       this.rows = rows;
+       this.columns = columns;
+       this.numToWin = numToWin;
+       board = new char[rows][columns];
+
+       // Initialize the board with empty spaces
+       for (int r = 0; r < rows; r++) {
+           for (int c = 0; c < columns; c++) {
+               board[r][c] = ' ';
+           }
+       }
+   }
 
     /**
      * A dynamic constructor for GameBoard letting you pass the initial board state. Useful for test cases
@@ -64,11 +79,32 @@ public class GameBoard extends AbsGameBoard
         this.board = initialBoard; 
     }
 
+    // Returns the number of columns on the game board.
+    @Override
+    public int getRows()
+    {
+        return rows;
+    }
+    
+    // Returns the number of rows on the game board.
+    @Override
+    public int getColumns()
+    {
+        return columns;
+    }
+
+    // Returns the number of tokens in a row needed to win the game.
+    @Override
+    public int getNumToWin()
+    {
+        return numToWin;
+    }
+
     // Places the character p in column c. The token will be placed in the lowest available row in column c.
     @Override // Now override because we are implementing an interface
     public void dropToken(char p, int c)
     {
-        for (int r = MAX_ROW - 1; r >= 0; r--)
+        for (int r = rows - 1; r >= 0; r--)
         {
             if (board[r][c] == ' ')
             {

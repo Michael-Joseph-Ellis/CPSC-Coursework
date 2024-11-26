@@ -15,9 +15,12 @@ Adam Niemczura - AdamNiem
 /**
  * GameBoard is a concrete implementation of the AbsGameBoard class, implementing the IGameBoard interface.
  * It represents a grid-like game board for a ConnectX game, with defined operations for placing tokens
- * and checking for game conditions.
+ * and checking for game conditions. Uses a 2D Array to represent the board.
  *
  * @corresponds:  self: board
+ *                numRows: rows
+ *                numCols: columns
+ *                numToWin: number of tokens required to win
  *
  * @invariants: board is a MAX_ROW x MAX_COL grid and contains only ' ', 'X', or 'O' characters.
  */
@@ -43,13 +46,6 @@ public class GameBoard extends AbsGameBoard
      */
 
     public GameBoard(int rows, int columns, int numToWin) {
-        if (!(rows >= 3 && rows <= 100) ||
-                !(columns >= 3 && columns <= 100) ||
-                !(numToWin >= 3 && numToWin <= 25) ||
-                numToWin > rows || numToWin > columns) {
-            throw new IllegalArgumentException("Invalid board dimensions or winning conditions.");
-        }
-
        this.rows = rows;
        this.columns = columns;
        this.numToWin = numToWin;

@@ -9,15 +9,18 @@ package cpsc2150.extendedConnectX.models;
  *  and is MAX_ROW x MAX_COL or smaller
  *
  * @defines: self: the board
+ *           numRows: number of rows in self
+ *           numCol: number of columns in self
+ *           tokensToWin: number of tokens required to win
  *
  * @constraints: None?
  *
  */
 
 public interface IGameBoard {
-    public static final int MAX_ROW = 9;
-    public static final int MAX_COL = 7;
-    public static final int TOKENS_TO_WIN = 5;
+    public static final int MAX_ROW = 100;
+    public static final int MAX_COL = 100;
+    public static final int TOKENS_TO_WIN = 25;
 
     /**
      * A checker to see if a column has a free space, accepts 1 int param
@@ -105,8 +108,8 @@ public interface IGameBoard {
      *       AND self = #self
      */
     default boolean checkTie(){
-        for (int r = 0; r < MAX_ROW; r++){
-            for (int c =0; c < MAX_COL; c++){
+        for (int r = 0; r < getRows(); r++){
+            for (int c =0; c < getColumns(); c++){
                 if (whatsAtPos(new BoardPosition(r,c)) == ' ')
                     return false;
             }
@@ -316,11 +319,11 @@ public interface IGameBoard {
      *
      * @param pos a position on the game board
      *
-     * @return the character ('X', 'O', or ' ') present at the specified position.
+     * @return the character present at the specified position.
      *
-     * @pre 0 <= pos.getRow() < MAX_ROW AND 0 <= pos.getColumn() < MAX_COL
+     * @pre 0 <= pos.getRow() < getRows() 0 <= pos.getColumn() < getColumns()
      *
-     * @post returns the character at the specified position (either 'X', 'O', or ' ')
+     * @post returns the character at the specified position
      *       AND self = #self
      */
 
@@ -356,7 +359,7 @@ public interface IGameBoard {
      * @post getRows = [the total number of rows specified for the game board during initialization]
      *       AND self = #self
      */
-    // Primary - needs to access board so change can be made
+    // Primary - Needs to access private data
     int getRows();
 
     /**
@@ -369,7 +372,7 @@ public interface IGameBoard {
      * @post getColumns = [the total number of columns specified for the game board during initialization]
      *       AND self = #self
      */
-    // Primary - needs to access board so change can be made
+    // Primary - Needs to access private data
     int getColumns();
 
     /**
@@ -380,6 +383,6 @@ public interface IGameBoard {
      * @pre None
      * @post getNumToWin = [the required number of tokens to win]
      */
-    // Primary - needs to access board so change can be made
+    // Primary - Needs to access private data
     int getNumToWin();
 }

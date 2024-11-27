@@ -1436,22 +1436,23 @@ public class TestGameBoard {
         assertEquals(expected, observed);
     }
 
-    private static String expectedBoardToString(char[][] gb) {
-        StringBuilder board = new StringBuilder();
+    private String expectedBoardToString(char[][] board) {
+        StringBuilder boardString = new StringBuilder();
 
-        for (int i = 0; i < (MAX_COL); i++) {
-            board.append("|").append(i);
+        // Add column headers dynamically
+        for (int i = 0; i < board[0].length; i++) {
+            boardString.append(String.format("| %d", i));
         }
+        boardString.append(" |\n");
 
-        board.append("|\n");
-
-        for (int i = 0; i < (MAX_ROW); i++) {
-            for (int j = 0; j < MAX_COL; j++) {
-                board.append("|").append(gb[i][j]);
+        // Add each row of the board from top to bottom
+        for (char[] chars : board) {
+            for (char aChar : chars) {
+                boardString.append(String.format("| %c", aChar));
             }
-            board.append("|\n");
+            boardString.append(" |\n");
         }
-        return board.toString();
+        return boardString.toString();
     }
 
     public IGameBoard makeBoard() 

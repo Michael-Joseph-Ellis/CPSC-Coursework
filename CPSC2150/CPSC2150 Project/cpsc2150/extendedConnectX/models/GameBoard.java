@@ -44,7 +44,6 @@ public class GameBoard extends AbsGameBoard
      * @post A new game board of size rows x columns is initialized with all empty spaces (' ').
      *       The winning condition is set to numToWin.
      */
-
     public GameBoard(int rows, int columns, int numToWin) {
        this.rows = rows;
        this.columns = columns;
@@ -68,7 +67,6 @@ public class GameBoard extends AbsGameBoard
      *
      * @post A new GameBoard is initialized with a board equivalent to the initialBoard specified.
      */
-
     // Initialize the board with the passed values
     public GameBoard(char[][] initialBoard)
     {

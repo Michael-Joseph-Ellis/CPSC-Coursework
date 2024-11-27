@@ -70,8 +70,6 @@ public class BoardPosition
         return this.Column; //returns the column
     }
 
-    // LOOK AT THIS
-
     /**
      * Standard override for the equals method
      * 
@@ -81,7 +79,6 @@ public class BoardPosition
      * 
      * @pre obj != null
      * 
-     * //@post equals = true OR equals = false AND obj = #obj AND Row = #Row AND Column = #Column
      * @post  returns true IF (this.getColumn() == obj.getColumn() AND this.getRow() == obj.getRow())
      * ELSE returns false.
      * obj = #obj AND Row = #Row AND Column = #Column

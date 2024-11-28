@@ -13,14 +13,15 @@ package cpsc2150.extendedConnectX.models;
  *           numCol: number of columns in self
  *           tokensToWin: number of tokens required to win
  *
- * @constraints: None?
+ * @constraints: [Pieces must abide by gravity (so no empty position can exist vertically between two pieces)]
+ *               AND [each player will only place one piece per turn]
  *
  */
 
 public interface IGameBoard {
-    public static final int MAX_ROW = 100;
-    public static final int MAX_COL = 100;
-    public static final int TOKENS_TO_WIN = 25;
+    public static final int MAX_ROW = 9;
+    public static final int MAX_COL = 7;
+    public static final int TOKENS_TO_WIN = 5;
 
     /**
      * A checker to see if a column has a free space, accepts 1 int param

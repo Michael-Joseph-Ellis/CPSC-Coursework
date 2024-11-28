@@ -40,7 +40,12 @@ public class GameBoard extends AbsGameBoard
      * @param columns: the number of columns for the game board
      * @param numToWin: the number of tokens needed to win the game
      *
-     * @pre 3 <= rows <= 100 AND 3 <= columns <= 100 AND 3 <= numToWin <= 25 AND numToWin <= rows AND numToWin <= columns
+     * @pre [min num of rows allowed] <= rows <= [max num of rows allowed]
+     *      AND [min num of columns allowed] <= columns <= [max num of columns allowed]
+     *      AND [min num to win allowed] <= numToWin <= [max num to win allowed]
+     *      AND numToWin <= rows
+     *      AND numToWin <= columns
+     *
      * @post A new game board of size rows x columns is initialized with all empty spaces (' ').
      *       The winning condition is set to numToWin.
      */

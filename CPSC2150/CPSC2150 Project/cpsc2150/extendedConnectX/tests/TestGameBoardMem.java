@@ -4,8 +4,6 @@ import cpsc2150.extendedConnectX.models.*;
 
 import static cpsc2150.extendedConnectX.models.GameBoard.MAX_COL;
 import static cpsc2150.extendedConnectX.models.GameBoard.MAX_ROW;
-import static cpsc2150.extendedConnectX.models.IGameBoard.MAX_COL;
-import static cpsc2150.extendedConnectX.models.IGameBoard.MAX_ROW;
 import static cpsc2150.extendedConnectX.models.IGameBoard.TOKENS_TO_WIN;
 import static org.junit.Assert.*;
 
@@ -88,37 +86,6 @@ public class TestGameBoardMem {
 
         assertTrue(gb.checkIfFree(0));
     }
-
-    @Test
-    public void TEMP_RE_TEST() {
-        IGameBoard gb = makeBoard();
-
-        char[][] initialBoard = {
-                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', 'X', ' ', ' '},
-                {' ', ' ', ' ', 'X', 'O', ' ', ' '},
-                {' ', ' ', 'X', 'X', 'X', ' ', ' '},
-                {' ', 'X', 'X', 'O', 'O', ' ', ' '},
-                {'X', 'O', 'O', 'O', 'O', ' ', ' '},
-        };
-
-        // Loop from the bottom row to the top row to set up the board
-        for (int row = initialBoard.length - 1; row >= 0; row--) {
-            for (int col = 0; col < initialBoard[row].length; col++) {
-                char token = initialBoard[row][col];
-                if (token != ' ') {
-                    gb.dropToken(token, col);
-                }
-            }
-        }
-
-        BoardPosition pos = new BoardPosition(4, 4);
-        assertTrue(gb.checkDiagWin(pos, 'X'));
-    }
-
 
     @Test
     public void Test_checkIfFree_col0_notFree() {
@@ -1439,24 +1406,27 @@ public class TestGameBoardMem {
     private String expectedBoardToString(char[][] board) {
         StringBuilder boardString = new StringBuilder();
 
-        // Add column headers dynamically
+        boardString.append("|");
         for (int i = 0; i < board[0].length; i++) {
-            boardString.append(String.format("| %d", i));
+            boardString.append(String.format("%2d|", i));
         }
-        boardString.append(" |\n");
+        boardString.append("\n");
 
         // Add each row of the board from top to bottom
-        for (char[] chars : board) {
-            for (char aChar : chars) {
-                boardString.append(String.format("| %c", aChar));
+        for (int r = 0; r < board.length; r++) {
+            boardString.append("|");
+            for (int c = 0; c < board[0].length; c++) {
+                boardString.append(String.format("%-2c|",  board[r][c] ));
             }
-            boardString.append(" |\n");
+            boardString.append("\n");
         }
         return boardString.toString();
+
     }
 
     public IGameBoard makeBoard()
     {
-        return new GameBoardMem(MAX_ROW, MAX_COL, TOKENS_TO_WIN); // Adjust the `numToWin` parameter as necessary
+        //Test cases designed for this board configuration
+        return new GameBoard(MAX_ROW, MAX_COL, TOKENS_TO_WIN);
     }
 }

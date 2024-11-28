@@ -16,11 +16,10 @@ public abstract class AbsGameBoard implements IGameBoard
     @Override
     public String toString() {
         StringBuilder boardString = new StringBuilder();
-        int width = String.valueOf(getColumns()).length(); // Determine the width based on the largest integer
 
         boardString.append("|");
         for (int i = 0; i < getColumns(); i++) {
-            boardString.append(String.format("%" + width + "d|", i));
+            boardString.append(String.format("%2d|", i));
         }
         boardString.append("\n");
 
@@ -28,10 +27,11 @@ public abstract class AbsGameBoard implements IGameBoard
         for (int r = 0; r < getRows(); r++) {
             boardString.append("|");
             for (int c = 0; c < getColumns(); c++) {
-                boardString.append(String.format("%-" + width + "c|",  whatsAtPos(new BoardPosition(r, c)) ));
+                boardString.append(String.format("%-2c|",  whatsAtPos(new BoardPosition(r, c)) ));
             }
             boardString.append("\n");
         }
+
         return boardString.toString();
     }
 }

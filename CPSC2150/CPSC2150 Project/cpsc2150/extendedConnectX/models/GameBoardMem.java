@@ -93,11 +93,8 @@ public class GameBoardMem extends AbsGameBoard
     @Override
     public char whatsAtPos(BoardPosition pos) {
         for (Map.Entry<Character, List<BoardPosition>> entry : board.entrySet()){
-            //System.out.println(entry.getValue());
-            for (BoardPosition comparePos : entry.getValue()) {
-                if (comparePos.equals(pos)) {
-                    return entry.getKey();
-                }
+            if (entry.getValue().contains(pos)){
+                return entry.getKey();
             }
         }
         return ' ';

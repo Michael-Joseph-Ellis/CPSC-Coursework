@@ -85,9 +85,13 @@ public class BoardPosition
      *
      */
 
-    public boolean equals(BoardPosition obj)
+    @Override
+    public boolean equals(Object obj)
     {
-        return Row == obj.Row && Column == obj.Column;
+        if (this == obj) return true;
+        if (getClass() != obj.getClass()) return false;
+        BoardPosition o = (BoardPosition) obj;
+        return Row == o.Row && Column == o.Column;
     }
 
     /**
